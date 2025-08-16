@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aura Beauty Studio - Versión "Calidez Terapéutica" (Revitalizada)</title>
+    
+    <title>Aura Beauty Studio - Belleza y Bienestar Holístico</title>
+    <meta name="description" content="Descubre Aura Beauty Studio, tu espacio de bienestar y belleza. Ofrecemos masajes, limpieza facial, manicura y tratamientos corporales personalizados con un enfoque holístico.">
+
     <style>
         /* --- Importación de Fuentes --- */
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@500;700&display=swap');
@@ -29,8 +32,6 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
-            
-            /* MODIFICADO: Textura sutil para dar vida al fondo */
             background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjZjdmNGVkIj48L3JlY3Q+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9ImNzY2FjNCIgb3BhY2l0eT0iMC4xIj48L3JlY3Q+Cjwvc3ZnPg==');
         }
 
@@ -45,10 +46,7 @@
 
         /* --- Header y Navegación --- */
         .header { position: fixed; width: 100%; padding: 30px 0; z-index: 100; transition: background-color 0.3s ease; }
-        .header.scrolled {
-             background-color: rgba(247, 244, 237, 0.9);
-             backdrop-filter: blur(10px);
-        }
+        .header.scrolled { background-color: rgba(247, 244, 237, 0.9); backdrop-filter: blur(10px); }
         .navbar { display: flex; justify-content: space-between; align-items: center; }
         .logo { font-family: var(--font-heading); font-weight: 700; font-size: 1.5rem; text-decoration: none; color: var(--color-text); }
         .nav-links a { margin: 0 20px; text-decoration: none; color: var(--color-text); font-weight: 600; position: relative; padding-bottom: 5px; }
@@ -56,27 +54,26 @@
         .nav-links a:hover::after { width: 100%; left: 0; background: var(--color-primary); }
 
         /* --- Hero Section --- */
-        .hero { height: 100vh; display: flex; align-items: center; background-image: linear-gradient(to right, rgba(247, 244, 237, 1) 30%, rgba(247, 244, 237, 0.2)), url('https://images.pexels.com/photos/3997989/pexels-photo-3997989.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); background-size: cover; background-position: center; }
+        .hero { 
+            height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            /* MODIFICADO: Nueva imagen de fondo para el Hero */
+            background-image: linear-gradient(to right, rgba(247, 244, 237, 1) 30%, rgba(247, 244, 237, 0.2)), url('img/masaje-hero.webp'); 
+            background-size: cover; 
+            background-position: center; 
+        }
         .hero-content { max-width: 50%; }
         .hero-content .subtitle { font-weight: 600; font-size: 1rem; color: var(--color-accent); margin-bottom: 20px; letter-spacing: 2px; text-transform: uppercase; }
         .hero-content p { margin: 30px 0; }
 
         /* --- Botones --- */
         .btn { display: inline-block; padding: 12px 30px; background: var(--color-primary); color: white; text-decoration: none; border-radius: 50px; font-weight: 600; transition: all 0.3s ease; }
-        .btn:hover {
-            transform: translateY(-3px);
-            /* MODIFICADO: Sombra más cálida y natural */
-            box-shadow: 0 4px 20px rgba(62, 39, 35, 0.25);
-        }
-
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 4px 20px rgba(62, 39, 35, 0.25); }
+        
         /* --- Sección de Servicios --- */
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 30px; }
-        .service-card {
-            position: relative; height: 450px; border-radius: 10px; overflow: hidden; color: white; display: flex; flex-direction: column; justify-content: flex-end; padding: 30px;
-            /* MODIFICADO: Sombra más cálida */
-            box-shadow: 0 10px 30px rgba(62, 39, 35, 0.15);
-            opacity: 0; transform: translateY(40px);
-        }
+        .service-card { position: relative; height: 450px; border-radius: 10px; overflow: hidden; color: white; display: flex; flex-direction: column; justify-content: flex-end; padding: 30px; box-shadow: 0 10px 30px rgba(62, 39, 35, 0.15); opacity: 0; transform: translateY(40px); }
         .service-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 60%); z-index: 1; transition: background 0.4s ease; }
         .service-card-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; z-index: 0; transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
         .service-card-content { position: relative; z-index: 2; transition: transform 0.4s ease; }
@@ -86,30 +83,11 @@
         .service-card:hover h3 { transform: translateY(0); }
         .service-card:hover p { opacity: 1; transform: translateY(0); }
         .service-card:hover::before { background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.1) 70%); }
-
-        /* --- NUEVO: Testimonios con Contraste --- */
-        .testimonial {
-            background-color: var(--color-primary); /* -> Fondo Terracota */
-            color: var(--color-background); /* -> Texto color Marfil */
-            text-align: center;
-        }
-        .testimonial-content blockquote {
-            font-family: var(--font-heading);
-            font-size: 2rem; /* Ligeramente más grande para mayor impacto */
-            line-height: 1.5;
-            max-width: 800px;
-            margin: 0 auto 30px;
-            font-style: italic;
-            color: var(--color-background); /* -> Texto color Marfil */
-        }
-        .testimonial-content cite {
-            font-weight: 600;
-            font-style: normal;
-            color: var(--color-background);
-            opacity: 0.9;
-        }
-
-        /* --- Footer --- */
+        
+        /* --- Secciones Restantes --- */
+        .testimonial { background-color: var(--color-primary); color: var(--color-background); text-align: center; }
+        .testimonial-content blockquote { font-family: var(--font-heading); font-size: 2rem; line-height: 1.5; max-width: 800px; margin: 0 auto 30px; font-style: italic; color: var(--color-background); }
+        .testimonial-content cite { font-weight: 600; font-style: normal; color: var(--color-background); opacity: 0.9; }
         .footer { background: #EAE6DA; text-align: center; padding: 50px 0; }
         .footer p { max-width: none; margin: 0; }
     </style>
@@ -117,61 +95,58 @@
 <body>
 
     <header class="header">
-        <div class="container">
-            <nav class="navbar">
-                <a href="#" class="logo">Aura</a>
-                <div class="nav-links">
-                    <a href="#services">Servicios</a>
-                    <a href="#testimonial">Testimonios</a>
-                    <a href="#contact">Contacto</a>
-                </div>
-            </nav>
-        </div>
+        <div class="container"><nav class="navbar"><a href="#" class="logo">Aura</a><div class="nav-links"><a href="#services">Servicios</a><a href="#testimonial">Testimonios</a><a href="#contact">Contacto</a></div></nav></div>
     </header>
 
     <section class="hero" id="home">
-        <div class="container">
-            <div class="hero-content">
-                <p class="subtitle" id="hero-subtitle">Bienestar & Belleza Consciente</p>
-                <h1 id="hero-title">El arte de cuidar tu piel, reflejado en tu alma.</h1>
-                <p id="hero-text">Descubre tratamientos personalizados que nutren tu piel y calman tu mente. Un espacio para reconectar contigo misma.</p>
-                <a href="#contact" class="btn" id="hero-btn">Reserva tu Cita</a>
-            </div>
-        </div>
+        <div class="container"><div class="hero-content"><p class="subtitle" id="hero-subtitle">Bienestar & Belleza Consciente</p><h1 id="hero-title">El arte de cuidar tu piel, reflejado en tu alma.</h1><p id="hero-text">Descubre tratamientos personalizados que nutren tu piel y calman tu mente. Un espacio para reconectar contigo misma.</p><a href="#contact" class="btn" id="hero-btn">Reserva tu Cita</a></div></div>
     </section>
 
     <section id="services">
         <div class="container">
             <h2 class="section-title">Nuestros Rituales de Belleza</h2>
             <div class="services-grid">
-                <div class="service-card"><div class="service-card-bg" style="background-image: url('https://images.pexels.com/photos/4041391/pexels-photo-4041391.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');"></div><div class="service-card-content"><h3>Mascarilla Nutritiva</h3><p>Un velo de ingredientes activos que purifica, hidrata y devuelve la luminosidad perdida a tu rostro.</p></div></div>
-                <div class="service-card"><div class="service-card-bg" style="background-image: url('https://images.pexels.com/photos/6621472/pexels-photo-6621472.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');"></div><div class="service-card-content"><h3>Limpieza Facial Profunda</h3><p>Renueva tu piel desde el interior. Extraemos impurezas y oxigenamos los poros para un acabado fresco y saludable.</p></div></div>
-                <div class="service-card"><div class="service-card-bg" style="background-image: url('https://images.pexels.com/photos/8472931/pexels-photo-8472931.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); background-position: top;"></div><div class="service-card-content"><h3>Manicura Signature</h3><p>Más que un esmaltado, un tratamiento completo que cuida tus manos, cutículas y uñas para un acabado impecable.</p></div></div>
-                <div class="service-card"><div class="service-card-bg" style="background-image: url('https://images.pexels.com/photos/7262993/pexels-photo-7262993.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');"></div><div class="service-card-content"><h3>Pedicura Spa Relajante</h3><p>Sumérgete en una experiencia de bienestar para tus pies. Incluye exfoliación, masaje y un esmaltado perfecto.</p></div></div>
-                <div class="service-card"><div class="service-card-bg" style="background-image: url('https://images.pexels.com/photos/4138923/pexels-photo-4138923.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');"></div><div class="service-card-content"><h3>Masaje Reductor & Moldeador</h3><p>Técnicas manuales intensas que activan la circulación, drenan líquidos y ayudan a esculpir tu silueta de forma natural.</p></div></div>
-                <div class="service-card"><div class="service-card-bg" style="background-image: url('https://images.pexels.com/photos/3997978/pexels-photo-3997978.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');"></div><div class="service-card-content"><h3>Tratamientos Corporales</h3><p>Descubre nuestras envolturas y exfoliaciones corporales diseñadas para nutrir y suavizar cada centímetro de tu piel.</p></div></div>
+                
+                <div class="service-card" alt="Mujer recibiendo una mascarilla facial nutritiva">
+                    <div class="service-card-bg" style="background-image: url('img/mascarilla-nutritiva.webp');"></div>
+                    <div class="service-card-content"><h3>Mascarilla Nutritiva</h3><p>Un velo de ingredientes activos que purifica, hidrata y devuelve la luminosidad perdida a tu rostro.</p></div>
+                </div>
+
+                <div class="service-card" alt="Profesional realizando una limpieza facial profunda a una clienta">
+                    <div class="service-card-bg" style="background-image: url('img/limpieza-facial.jpeg');"></div>
+                    <div class="service-card-content"><h3>Limpieza Facial Profunda</h3><p>Renueva tu piel desde el interior. Extraemos impurezas y oxigenamos los poros para un acabado fresco y saludable.</p></div>
+                </div>
+                
+                <div class="service-card" alt="Primer plano de una manicura profesional con acabado perfecto">
+                    <div class="service-card-bg" style="background-image: url('img/manicura.jpeg');"></div>
+                    <div class="service-card-content"><h3>Manicura Signature</h3><p>Más que un esmaltado, un tratamiento completo que cuida tus manos, cutículas y uñas para un acabado impecable.</p></div>
+                </div>
+
+                <div class="service-card" alt="Pies cuidados en un bol de madera durante una pedicura de spa">
+                    <div class="service-card-bg" style="background-image: url('img/pedicura.jpeg');"></div>
+                    <div class="service-card-content"><h3>Pedicura Spa Relajante</h3><p>Sumérgete en una experiencia de bienestar para tus pies. Incluye exfoliación, masaje y un esmaltado perfecto.</p></div>
+                </div>
+                
+                <div class="service-card" alt="Masajista aplicando un masaje reductor en el abdomen">
+                    <div class="service-card-bg" style="background-image: url('img/masaje-reductor.jpeg');"></div>
+                    <div class="service-card-content"><h3>Masaje Reductor & Moldeador</h3><p>Técnicas manuales intensas que activan la circulación, drenan líquidos y ayudan a esculpir tu silueta de forma natural.</p></div>
+                </div>
+
+                <div class="service-card" alt="Mujer recibiendo un tratamiento corporal con exfoliante de hierbas">
+                    <div class="service-card-bg" style="background-image: url('img/tratamiento-corporal.jpeg');"></div>
+                    <div class="service-card-content"><h3>Tratamientos Corporales</h3><p>Descubre nuestras envolturas y exfoliaciones corporales diseñadas para nutrir y suavizar cada centímetro de tu piel.</p></div>
+                </div>
+
             </div>
         </div>
     </section>
     
     <section class="testimonial" id="testimonial">
-        <div class="container">
-            <div class="testimonial-content">
-                <blockquote>"Desde que descubrí Aura, el cuidado de mi piel ha pasado de ser una rutina a ser mi ritual favorito. La profesionalidad y la calidez son inigualables."</blockquote>
-                <cite>- Sofía L.</cite>
-            </div>
-        </div>
+        <div class="container"><div class="testimonial-content"><blockquote>"Desde que descubrí Aura, el cuidado de mi piel ha pasado de ser una rutina a ser mi ritual favorito. La profesionalidad y la calidez son inigualables."</blockquote><cite>- Sofía L.</cite></div></div>
     </section>
 
     <footer class="footer" id="contact">
-        <div class="container">
-            <h2>¿Lista para empezar tu viaje de bienestar?</h2>
-            <p>Encuéntrame en C/ de la Serenidad, 123, Barcelona | Teléfono: 600 123 456</p>
-            <br>
-            <a href="mailto:hola@aurastudio.com" class="btn">Enviar un Email</a>
-            <br><br><br>
-            <p>&copy; 2025 Aura Beauty Studio. Diseñado con ♡.</p>
-        </div>
+        <div class="container"><h2>¿Lista para empezar tu viaje de bienestar?</h2><p>Encuéntrame en C/ de la Serenidad, 123, Barcelona | Teléfono: 600 123 456</p><br><a href="mailto:hola@aurastudio.com" class="btn">Enviar un Email</a><br><br><br><p>&copy; 2025 Aura Beauty Studio. Diseñado con ♡.</p></div>
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
@@ -179,40 +154,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollToPlugin.min.js"></script>
     <script>
         gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
-
-        // MODIFICADO: Animación de entrada refinada
         const tl = gsap.timeline({defaults: {ease: "power3.out"}});
-        tl.from('.logo', {opacity: 0, y: -20, duration: 0.8, delay: 0.3})
-          .from('.nav-links a', {opacity: 0, y: -20, duration: 0.6, stagger: 0.2}, "-=0.6")
-          .from('#hero-subtitle', {opacity: 0, y: 20, duration: 0.8}, "-=0.6")
-          .from('#hero-title', {opacity: 0, y: 20, duration: 1}, "-=0.6")
-          .from('#hero-text', {opacity: 0, y: 20, duration: 1}, "-=0.8")
-          .from('#hero-btn', {opacity: 0, y: 20, duration: 1}, "-=0.8");
-
+        tl.from('.logo', {opacity: 0, y: -20, duration: 0.8, delay: 0.3}).from('.nav-links a', {opacity: 0, y: -20, duration: 0.6, stagger: 0.2}, "-=0.6").from('#hero-subtitle', {opacity: 0, y: 20, duration: 0.8}, "-=0.6").from('#hero-title', {opacity: 0, y: 20, duration: 1}, "-=0.6").from('#hero-text', {opacity: 0, y: 20, duration: 1}, "-=0.8").from('#hero-btn', {opacity: 0, y: 20, duration: 1}, "-=0.8");
         const serviceCards = gsap.utils.toArray('.service-card');
-        serviceCards.forEach((card) => {
-            gsap.to(card, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", scrollTrigger: { trigger: card, start: "top 85%", toggleActions: "play none none none" } });
-        });
-        
+        serviceCards.forEach((card) => { gsap.to(card, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", scrollTrigger: { trigger: card, start: "top 85%", toggleActions: "play none none none" } }); });
         const sectionTitles = gsap.utils.toArray('.section-title');
-        sectionTitles.forEach(title => {
-           gsap.from(title, { opacity: 0, y: 30, duration: 1, scrollTrigger: { trigger: title, start: "top 90%", toggleActions: "play none none none" } }) 
-        });
-
+        sectionTitles.forEach(title => { gsap.from(title, { opacity: 0, y: 30, duration: 1, scrollTrigger: { trigger: title, start: "top 90%", toggleActions: "play none none none" } }) });
         const header = document.querySelector('.header');
-        window.addEventListener('scroll', () => {
-            header.classList.toggle('scrolled', window.scrollY > 50);
-        });
-
+        window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 50); });
         let isAnimating = false;
-        function goToSection(e) {
-            if (isAnimating) { e.preventDefault(); return; }
-            if (window.scrollY === 0 && e.deltaY > 0) {
-                e.preventDefault();
-                isAnimating = true;
-                gsap.to(window, { duration: 1.5, scrollTo: "#services", ease: "power2.inOut", onComplete: () => { isAnimating = false; } });
-            }
-        }
+        function goToSection(e) { if (isAnimating) { e.preventDefault(); return; } if (window.scrollY === 0 && e.deltaY > 0) { e.preventDefault(); isAnimating = true; gsap.to(window, { duration: 1.5, scrollTo: "#services", ease: "power2.inOut", onComplete: () => { isAnimating = false; } }); } }
         window.addEventListener('wheel', goToSection, { passive: false });
     </script>
 </body>
