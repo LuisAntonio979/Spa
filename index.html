@@ -8,12 +8,27 @@
     <meta name="description" content="Descubre Aura Beauty Studio, tu espacio de bienestar y belleza. Ofrecemos masajes, limpieza facial, manicura y tratamientos corporales personalizados con un enfoque holístico.">
 
     <style>
-        /* CSS sin cambios... */
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@500;700&display=swap');
-        :root { --color-background: #F7F4ED; --color-text: #3E2723; --color-primary: #E07A5F; --color-accent: #CD7F32; --font-heading: 'Playfair Display', serif; --font-body: 'Montserrat', sans-serif; }
+        @import url('https://fonts.googleapis.comcom/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@500;700&display=swap');
+        :root {
+            --color-background: #F7F4ED;
+            --color-text: #3E2723;
+            --color-primary: #E07A5F;
+            --color-accent: #CD7F32;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Montserrat', sans-serif;
+        }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
-        body { font-family: var(--font-body); background-color: var(--color-background); color: var(--color-text); line-height: 1.7; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; overflow-x: hidden; background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjZjdmNGVkIj48L3JlY3Q+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9ImNzY2FjNCIgb3BhY2l0eT0iMC4xIj48L3JlY3Q+Cjwvc3ZnPg=='); }
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-background);
+            color: var(--color-text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjZjdmNGVkIj48L3JlY3Q+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9ImNzY2FjNCIgb3BhY2l0eT0iMC4xIj48L3JlY3Q+Cjwvc3ZnPg==');
+        }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
         section { padding: 120px 0; }
         h1, h2, h3 { font-family: var(--font-heading); font-weight: 500; line-height: 1.2; color: var(--color-text); }
@@ -29,23 +44,122 @@
         .nav-links a { margin: 0 20px; text-decoration: none; color: var(--color-text); font-weight: 600; position: relative; padding-bottom: 5px; }
         .nav-links a::after { content: ''; position: absolute; width: 0; height: 1.5px; display: block; margin-top: 5px; right: 0; background: var(--color-primary); transition: width 0.3s ease; }
         .nav-links a:hover::after { width: 100%; left: 0; background: var(--color-primary); }
-        .hero { height: 100vh; display: flex; align-items: center; background-image: linear-gradient(to right, rgba(247, 244, 237, 1) 30%, rgba(247, 244, 237, 0.2)), url('img/masaje-hero.webp'); background-size: cover; background-position:  0 0, calc(50% + 200px) 20%; }
+        .hero { height: 100vh; display: flex; align-items: center; background-image: linear-gradient(to right, rgba(247, 244, 237, 1) 30%, rgba(247, 244, 237, 0.2)), url('img/masaje-hero.webp'); background-size: cover; background-position: 0 0, calc(50% + 200px) 20%; }
         .hero-content { max-width: 50%; }
         .hero-content .subtitle { font-weight: 600; font-size: 1rem; color: var(--color-accent); margin-bottom: 20px; letter-spacing: 2px; text-transform: uppercase; }
         .hero-content p { margin: 30px 0; }
         .btn { display: inline-block; padding: 12px 30px; background: var(--color-primary); color: white; text-decoration: none; border-radius: 50px; font-weight: 600; transition: all 0.3s ease; }
         .btn:hover { transform: translateY(-3px); box-shadow: 0 4px 20px rgba(62, 39, 35, 0.25); }
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 30px; }
-        .service-card { position: relative; height: 450px; border-radius: 10px; overflow: hidden; color: white; display: flex; flex-direction: column; justify-content: flex-end; padding: 30px; box-shadow: 0 10px 30px rgba(62, 39, 35, 0.15); opacity: 0; transform: translateY(40px); }
+
+        /* --- NUEVA SECCIÓN DE SERVICIOS: MOSAICO INTERACTIVO --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: 220px;
+            gap: 20px;
+        }
+        .service-card {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            color: white;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(62, 39, 35, 0.15);
+            /* Animación inicial de entrada */
+            opacity: 0; 
+            transform: translateY(40px);
+        }
+        /* Definición del Mosaico */
+        .service-card:nth-child(1) { grid-column: 1 / 3; grid-row: 1 / 3; }
+        .service-card:nth-child(2) { grid-column: 3 / 4; grid-row: 1 / 2; }
+        .service-card:nth-child(3) { grid-column: 4 / 5; grid-row: 1 / 2; }
+        .service-card:nth-child(4) { grid-column: 3 / 5; grid-row: 2 / 3; }
+        .service-card:nth-child(5) { grid-column: 1 / 2; grid-row: 3 / 4; }
+        .service-card:nth-child(6) { grid-column: 2 / 5; grid-row: 3 / 4; }
+
         .service-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 60%); z-index: 1; transition: background 0.4s ease; }
-        .service-card-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; z-index: 0; transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-        .service-card-content { position: relative; z-index: 2; transition: transform 0.4s ease; }
-        .service-card h3 { font-size: 1.8rem; margin-bottom: 10px; color: white; transform: translateY(20px); transition: transform 0.4s ease; }
-        .service-card p { font-size: 0.95rem; max-width: 100%; opacity: 0; transform: translateY(20px); transition: opacity 0.4s ease, transform 0.4s ease; transition-delay: 0.05s; }
-        .service-card:hover .service-card-bg { transform: scale(1.05); }
-        .service-card:hover h3 { transform: translateY(0); }
-        .service-card:hover p { opacity: 1; transform: translateY(0); }
-        .service-card:hover::before { background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.1) 70%); }
+        .service-card-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; z-index: 0; }
+        .service-card-content { position: relative; z-index: 2; }
+        .service-card h3 { font-size: 1.8rem; margin-bottom: 10px; color: white; }
+        .service-card p {
+            font-size: 0.95rem;
+            max-width: 100%;
+            opacity: 0; /* Oculto por defecto */
+            transform: translateY(15px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        /* El texto se muestra en hover (para la animación JS) */
+        .desktop .service-card:hover p { opacity: 1; transform: translateY(0); }
+        
+        /* Estilos para el Modal en Móvil */
+        .service-card-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0,0,0,0.6);
+            z-index: 200;
+            opacity: 0;
+            pointer-events: none; /* No se puede hacer clic por defecto */
+            transition: opacity 0.4s ease;
+        }
+        .service-card-overlay.is-active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        body.modal-open { overflow: hidden; }
+        .service-card.is-active {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            width: 90%;
+            max-width: 500px;
+            height: 70%;
+            max-height: 600px;
+            z-index: 201;
+            cursor: default;
+        }
+        .service-card.is-active p {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .service-card-close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 3;
+            background: rgba(255,255,255,0.8);
+            color: #333;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: none; /* Oculto por defecto */
+            place-items: center;
+        }
+        .service-card.is-active .service-card-close-btn { display: grid; }
+        
+        /* Media query para adaptar el mosaico a pantallas más pequeñas */
+        @media (max-width: 768px) {
+            .services-grid {
+                grid-template-columns: 1fr 1fr;
+                grid-auto-rows: 250px;
+            }
+            .service-card:nth-child(1) { grid-column: 1 / 3; grid-row: 1 / 2; }
+            .service-card:nth-child(2) { grid-column: 1 / 2; grid-row: 2 / 3; }
+            .service-card:nth-child(3) { grid-column: 2 / 3; grid-row: 2 / 3; }
+            .service-card:nth-child(4) { grid-column: 1 / 3; grid-row: 3 / 4; }
+            .service-card:nth-child(5) { grid-column: 1 / 2; grid-row: 4 / 5; }
+            .service-card:nth-child(6) { grid-column: 2 / 3; grid-row: 4 / 5; }
+        }
+
+        /* --- Secciones Restantes --- */
         .testimonial { background-color: var(--color-primary); color: var(--color-background); text-align: center; }
         .testimonial-content blockquote { font-family: var(--font-heading); font-size: 2rem; line-height: 1.5; max-width: 800px; margin: 0 auto 30px; font-style: italic; color: var(--color-background); }
         .testimonial-content cite { font-weight: 600; font-style: normal; color: var(--color-background); opacity: 0.9; }
@@ -69,31 +183,37 @@
             <div class="services-grid">
                 
                 <div class="service-card" alt="Mujer recibiendo una mascarilla facial nutritiva">
+                    <button class="service-card-close-btn">&times;</button>
                     <div class="service-card-bg" style="background-image: url('img/mascarilla-nutritiva.webp');"></div>
                     <div class="service-card-content"><h3>Mascarilla Nutritiva</h3><p>Un velo de ingredientes activos que purifica, hidrata y devuelve la luminosidad perdida a tu rostro.</p></div>
                 </div>
 
                 <div class="service-card" alt="Profesional realizando una limpieza facial profunda a una clienta">
+                    <button class="service-card-close-btn">&times;</button>
                     <div class="service-card-bg" style="background-image: url('img/limpieza-facial.jpg');"></div>
                     <div class="service-card-content"><h3>Limpieza Facial Profunda</h3><p>Renueva tu piel desde el interior. Extraemos impurezas y oxigenamos los poros para un acabado fresco y saludable.</p></div>
                 </div>
                 
                 <div class="service-card" alt="Primer plano de una manicura profesional con acabado perfecto">
+                    <button class="service-card-close-btn">&times;</button>
                     <div class="service-card-bg" style="background-image: url('img/manicura.jpg');"></div>
                     <div class="service-card-content"><h3>Manicura Signature</h3><p>Más que un esmaltado, un tratamiento completo que cuida tus manos, cutículas y uñas para un acabado impecable.</p></div>
                 </div>
 
                 <div class="service-card" alt="Pies cuidados en un bol de madera durante una pedicura de spa">
+                    <button class="service-card-close-btn">&times;</button>
                     <div class="service-card-bg" style="background-image: url('img/pedicura.jpg');"></div>
                     <div class="service-card-content"><h3>Pedicura Spa Relajante</h3><p>Sumérgete en una experiencia de bienestar para tus pies. Incluye exfoliación, masaje y un esmaltado perfecto.</p></div>
                 </div>
                 
                 <div class="service-card" alt="Masajista aplicando un masaje reductor en el abdomen">
+                    <button class="service-card-close-btn">&times;</button>
                     <div class="service-card-bg" style="background-image: url('img/masaje-reductor.jpg');"></div>
                     <div class="service-card-content"><h3>Masaje Reductor & Moldeador</h3><p>Técnicas manuales intensas que activan la circulación, drenan líquidos y ayudan a esculpir tu silueta de forma natural.</p></div>
                 </div>
 
                 <div class="service-card" alt="Mujer recibiendo un tratamiento corporal con exfoliante de hierbas">
+                    <button class="service-card-close-btn">&times;</button>
                     <div class="service-card-bg" style="background-image: url('img/tratamiento-corporal.jpg');"></div>
                     <div class="service-card-content"><h3>Tratamientos Corporales</h3><p>Descubre nuestras envolturas y exfoliaciones corporales diseñadas para nutrir y suavizar cada centímetro de tu piel.</p></div>
                 </div>
@@ -102,6 +222,8 @@
         </div>
     </section>
     
+    <div class="service-card-overlay"></div>
+
     <section class="testimonial" id="testimonial">
         <div class="container"><div class="testimonial-content"><blockquote>"Desde que descubrí Aura, el cuidado de mi piel ha pasado de ser una rutina a ser mi ritual favorito. La profesionalidad y la calidez son inigualables."</blockquote><cite>- Sofía L.</cite></div></div>
     </section>
@@ -110,22 +232,96 @@
         <div class="container"><h2>¿Lista para empezar tu viaje de bienestar?</h2><p>Encuéntrame en C/ de la Serenidad, 123, Barcelona | Teléfono: 600 123 456</p><br><a href="mailto:hola@aurastudio.com" class="btn">Enviar un Email</a><br><br><br><p>&copy; 2025 Aura Beauty Studio. Diseñado con ♡.</p></div>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollToPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
     <script>
         gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+        // --- LÓGICA DE ANIMACIÓN GENERAL (SIN CAMBIOS) ---
         const tl = gsap.timeline({defaults: {ease: "power3.out"}});
         tl.from('.logo', {opacity: 0, y: -20, duration: 0.8, delay: 0.3}).from('.nav-links a', {opacity: 0, y: -20, duration: 0.6, stagger: 0.2}, "-=0.6").from('#hero-subtitle', {opacity: 0, y: 20, duration: 0.8}, "-=0.6").from('#hero-title', {opacity: 0, y: 20, duration: 1}, "-=0.6").from('#hero-text', {opacity: 0, y: 20, duration: 1}, "-=0.8").from('#hero-btn', {opacity: 0, y: 20, duration: 1}, "-=0.8");
-        const serviceCards = gsap.utils.toArray('.service-card');
-        serviceCards.forEach((card) => { gsap.to(card, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", scrollTrigger: { trigger: card, start: "top 85%", toggleActions: "play none none none" } }); });
-        const sectionTitles = gsap.utils.toArray('.section-title');
-        sectionTitles.forEach(title => { gsap.from(title, { opacity: 0, y: 30, duration: 1, scrollTrigger: { trigger: title, start: "top 90%", toggleActions: "play none none none" } }) });
+        gsap.from('.section-title', { opacity: 0, y: 30, duration: 1, scrollTrigger: { trigger: '.section-title', start: "top 90%", toggleActions: "play none none none" } });
         const header = document.querySelector('.header');
         window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 50); });
-        let isAnimating = false;
-        function goToSection(e) { if (isAnimating) { e.preventDefault(); return; } if (window.scrollY === 0 && e.deltaY > 0) { e.preventDefault(); isAnimating = true; gsap.to(window, { duration: 1.5, scrollTo: "#services", ease: "power2.inOut", onComplete: () => { isAnimating = false; } }); } }
+        let isAnimatingScroll = false;
+        function goToSection(e) { if (isAnimatingScroll) { e.preventDefault(); return; } if (window.scrollY === 0 && e.deltaY > 0) { e.preventDefault(); isAnimatingScroll = true; gsap.to(window, { duration: 1.5, scrollTo: "#services", ease: "power2.inOut", onComplete: () => { isAnimatingScroll = false; } }); } }
         window.addEventListener('wheel', goToSection, { passive: false });
+
+        // --- NUEVA LÓGICA PARA EL MOSAICO INTERACTIVO ---
+
+        const cards = gsap.utils.toArray(".service-card");
+        const overlay = document.querySelector(".service-card-overlay");
+
+        // Animación de entrada para las tarjetas del mosaico
+        gsap.to(cards, {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "power3.out",
+            scrollTrigger: {
+                trigger: ".services-grid",
+                start: "top 80%",
+            }
+        });
+
+        const isTouchDevice = 'ontouchstart' in window;
+        document.body.classList.add(isTouchDevice ? 'touch' : 'desktop');
+
+        if (!isTouchDevice) {
+            // Lógica de Hover para Escritorio
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    gsap.to(card, { scale: 1.05, duration: 0.3, ease: 'power2.out', zIndex: 10 });
+                    const otherCards = cards.filter(c => c !== card);
+                    gsap.to(otherCards, { scale: 0.95, opacity: 0.5, duration: 0.3, ease: 'power2.out' });
+                });
+                card.addEventListener('mouseleave', () => {
+                    gsap.to(cards, { scale: 1, opacity: 1, duration: 0.3, ease: 'power2.out', zIndex: 1 });
+                });
+            });
+        } else {
+            // Lógica de Clic para Móviles
+            cards.forEach(card => {
+                const closeBtn = card.querySelector('.service-card-close-btn');
+
+                card.addEventListener('click', () => {
+                    if (card.classList.contains('is-active')) return;
+                    document.body.classList.add('modal-open');
+                    overlay.classList.add('is-active');
+                    card.classList.add('is-active');
+                    gsap.fromTo(card, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'power3.out' });
+                });
+                
+                const closeModal = () => {
+                    document.body.classList.remove('modal-open');
+                    overlay.classList.remove('is-active');
+                    gsap.to(card, {
+                        opacity: 0, 
+                        scale: 0.8, 
+                        duration: 0.4, 
+                        ease: 'power3.in',
+                        onComplete: () => {
+                            card.classList.remove('is-active');
+                            // Reseteamos el estilo para que vuelva a su lugar en el grid
+                            gsap.set(card, { clearProps: "all" });
+                        }
+                    });
+                };
+                
+                closeBtn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Evita que el clic se propague a la tarjeta
+                    closeModal();
+                });
+
+                overlay.addEventListener('click', () => {
+                    if (card.classList.contains('is-active')) {
+                        closeModal();
+                    }
+                });
+            });
+        }
     </script>
 </body>
 </html>
