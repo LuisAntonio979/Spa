@@ -51,78 +51,79 @@
         .btn { display: inline-block; padding: 12px 30px; background: var(--color-primary); color: white; text-decoration: none; border-radius: 50px; font-weight: 600; transition: all 0.3s ease; }
         .btn:hover { transform: translateY(-3px); box-shadow: 0 4px 20px rgba(62, 39, 35, 0.25); }
 
-        /* --- NUEVA SECCIÓN DE SERVICIOS: MOSAICO "SPOTLIGHT" --- */
+        /* --- NUEVA SECCIÓN DE SERVICIOS: MOSAICO INTEGRADO --- */
         .services-grid {
-            position: relative; /* Clave para el posicionamiento absoluto del spotlight */
+            width: 100%;
+            aspect-ratio: 1.6 / 1;
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            grid-auto-rows: 220px;
-            gap: 20px;
-        }
-        .service-card {
+            grid-template-rows: repeat(3, 1fr);
+            gap: 1%;
             position: relative;
-            border-radius: 10px;
+            filter: url(#gooey); /* Aplicar filtro líquido */
+        }
+        .tarjeta {
+            border-radius: 0.8vw;
+            position: relative;
             overflow: hidden;
+            z-index: 1;
+            cursor: pointer;
             color: white;
-            padding: 30px;
+        }
+        .tarjeta-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+        }
+        .tarjeta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.1) 60%);
+        }
+        .tarjeta-contenido {
+            position: absolute;
+            inset: 0;
+            padding: 1.5vw;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(62, 39, 35, 0.15);
-            /* Animación inicial de entrada */
-            opacity: 0; 
-            transform: translateY(40px);
         }
-        /* Definición del Mosaico */
-        .service-card:nth-child(1) { grid-column: 1 / 3; grid-row: 1 / 3; }
-        .service-card:nth-child(2) { grid-column: 3 / 4; grid-row: 1 / 2; }
-        .service-card:nth-child(3) { grid-column: 4 / 5; grid-row: 1 / 2; }
-        .service-card:nth-child(4) { grid-column: 3 / 5; grid-row: 2 / 3; }
-        .service-card:nth-child(5) { grid-column: 1 / 2; grid-row: 3 / 4; }
-        .service-card:nth-child(6) { grid-column: 2 / 5; grid-row: 3 / 4; }
-        .service-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 60%); z-index: 1; transition: background 0.4s ease; }
-        .service-card-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; z-index: 0; }
-        .service-card-content { position: relative; z-index: 2; }
-        .service-card h3 { font-size: 1.8rem; margin-bottom: 10px; color: white; }
-        .service-card p { font-size: 0.95rem; max-width: 100%; opacity: 0; transform: translateY(15px); transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s; } /* Añadido un pequeño delay */
-
-        /* Clases para el efecto Spotlight (manejado por GSAP Flip) */
-        .service-card.spotlight {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 450px;
-            height: 300px;
+        .tarjeta-contenido h3 {
+            font-family: var(--font-heading);
+            font-size: clamp(1rem, 1.5vw, 1.8rem); /* Texto responsivo */
+            line-height: 1.2;
+            margin: 0;
+            color: white;
+        }
+        .tarjeta-contenido p {
+            font-family: var(--font-body);
+            font-size: clamp(0.7rem, 0.8vw, 0.9rem); /* Texto responsivo */
+            line-height: 1.5;
+            margin-top: 0.5vw;
+            opacity: 0;
+            max-height: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease-out, max-height 0.3s ease-out, transform 0.3s ease-out;
+        }
+        .tarjeta.atenuado {
+            opacity: 0.3;
+            filter: grayscale(50%);
+            z-index: 1;
+        }
+        .tarjeta.activo {
+            transform: scale(1.02);
+            box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.2);
             z-index: 10;
         }
-        .service-card.spotlight p {
+        .tarjeta.activo .tarjeta-contenido p {
             opacity: 1;
+            max-height: 100px;
             transform: translateY(0);
-        }
-        .service-card.dimmed {
-            opacity: 0.4;
-            transform: scale(0.9);
-        }
-        
-        /* Estilos para el Modal en Móvil (sin cambios) */
-        .service-card-overlay { position: fixed; inset: 0; background-color: rgba(0,0,0,0.6); z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
-        .service-card-overlay.is-active { opacity: 1; pointer-events: all; }
-        body.modal-open { overflow: hidden; }
-        .service-card.is-active { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(1); width: 90%; max-width: 500px; height: 70%; max-height: 600px; z-index: 201; cursor: default; }
-        .service-card.is-active p { opacity: 1; transform: translateY(0); }
-        .service-card-close-btn { position: absolute; top: 15px; right: 15px; z-index: 3; background: rgba(255,255,255,0.8); color: #333; border: none; width: 30px; height: 30px; border-radius: 50%; font-size: 1.2rem; font-weight: bold; cursor: pointer; display: none; place-items: center; }
-        .service-card.is-active .service-card-close-btn { display: grid; }
-        
-        @media (max-width: 768px) {
-            .services-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 250px; }
-            .service-card:nth-child(1) { grid-column: 1 / 3; grid-row: 1 / 2; }
-            .service-card:nth-child(2) { grid-column: 1 / 2; grid-row: 2 / 3; }
-            .service-card:nth-child(3) { grid-column: 2 / 3; grid-row: 2 / 3; }
-            .service-card:nth-child(4) { grid-column: 1 / 3; grid-row: 3 / 4; }
-            .service-card:nth-child(5) { grid-column: 1 / 2; grid-row: 4 / 5; }
-            .service-card:nth-child(6) { grid-column: 2 / 3; grid-row: 4 / 5; }
         }
 
         /* --- Secciones Restantes --- */
@@ -134,6 +135,7 @@
     </style>
 </head>
 <body>
+
     <header class="header">
         <div class="container"><nav class="navbar"><a href="#" class="logo">Aura</a><div class="nav-links"><a href="#services">Servicios</a><a href="#testimonial">Testimonios</a><a href="#contact">Contacto</a></div></nav></div>
     </header>
@@ -146,19 +148,16 @@
         <div class="container">
             <h2 class="section-title">Nuestros Rituales de Belleza</h2>
             <div class="services-grid">
-                <!-- El HTML de las tarjetas no necesita cambios -->
-                <div class="service-card" alt="Mujer recibiendo una mascarilla facial nutritiva"><button class="service-card-close-btn">&times;</button><div class="service-card-bg" style="background-image: url('img/mascarilla-nutritiva.webp');"></div><div class="service-card-content"><h3>Mascarilla Nutritiva</h3><p>Un velo de ingredientes activos que purifica, hidrata y devuelve la luminosidad perdida a tu rostro.</p></div></div>
-                <div class="service-card" alt="Profesional realizando una limpieza facial profunda a una clienta"><button class="service-card-close-btn">&times;</button><div class="service-card-bg" style="background-image: url('img/limpieza-facial.jpg');"></div><div class="service-card-content"><h3>Limpieza Facial Profunda</h3><p>Renueva tu piel desde el interior. Extraemos impurezas y oxigenamos los poros para un acabado fresco y saludable.</p></div></div>
-                <div class="service-card" alt="Primer plano de una manicura profesional con acabado perfecto"><button class="service-card-close-btn">&times;</button><div class="service-card-bg" style="background-image: url('img/manicura.jpg');"></div><div class="service-card-content"><h3>Manicura Signature</h3><p>Más que un esmaltado, un tratamiento completo que cuida tus manos, cutículas y uñas para un acabado impecable.</p></div></div>
-                <div class="service-card" alt="Pies cuidados en un bol de madera durante una pedicura de spa"><button class="service-card-close-btn">&times;</button><div class="service-card-bg" style="background-image: url('img/pedicura.jpg');"></div><div class="service-card-content"><h3>Pedicura Spa Relajante</h3><p>Sumérgete en una experiencia de bienestar para tus pies. Incluye exfoliación, masaje y un esmaltado perfecto.</p></div></div>
-                <div class="service-card" alt="Masajista aplicando un masaje reductor en el abdomen"><button class="service-card-close-btn">&times;</button><div class="service-card-bg" style="background-image: url('img/masaje-reductor.jpg');"></div><div class="service-card-content"><h3>Masaje Reductor & Moldeador</h3><p>Técnicas manuales intensas que activan la circulación, drenan líquidos y ayudan a esculpir tu silueta de forma natural.</p></div></div>
-                <div class="service-card" alt="Mujer recibiendo un tratamiento corporal con exfoliante de hierbas"><button class="service-card-close-btn">&times;</button><div class="service-card-bg" style="background-image: url('img/tratamiento-corporal.jpg');"></div><div class="service-card-content"><h3>Tratamientos Corporales</h3><p>Descubre nuestras envolturas y exfoliaciones corporales diseñadas para nutrir y suavizar cada centímetro de tu piel.</p></div></div>
+                <div class="tarjeta" data-id="1"><div class="tarjeta-bg" style="background-image: url('img/mascarilla-nutritiva.webp');"></div><div class="tarjeta-contenido"><h3>Mascarilla Nutritiva</h3><p>Un velo de ingredientes activos que purifica, hidrata y devuelve la luminosidad perdida a tu rostro.</p></div></div>
+                <div class="tarjeta" data-id="2"><div class="tarjeta-bg" style="background-image: url('img/limpieza-facial.jpg');"></div><div class="tarjeta-contenido"><h3>Limpieza Facial</h3><p>Renueva tu piel desde el interior. Extraemos impurezas y oxigenamos los poros para un acabado fresco y saludable.</p></div></div>
+                <div class="tarjeta" data-id="3"><div class="tarjeta-bg" style="background-image: url('img/manicura.jpg');"></div><div class="tarjeta-contenido"><h3>Manicura Signature</h3><p>Un tratamiento completo que cuida tus manos, cutículas y uñas para un acabado impecable.</p></div></div>
+                <div class="tarjeta" data-id="4"><div class="tarjeta-bg" style="background-image: url('img/pedicura.jpg');"></div><div class="tarjeta-contenido"><h3>Pedicura Spa</h3><p>Sumérgete en una experiencia de bienestar para tus pies. Incluye exfoliación, masaje y un esmaltado perfecto.</p></div></div>
+                <div class="tarjeta" data-id="5"><div class="tarjeta-bg" style="background-image: url('img/masaje-reductor.jpg');"></div><div class="tarjeta-contenido"><h3>Masaje Reductor</h3><p>Técnicas manuales intensas que activan la circulación, drenan líquidos y ayudan a esculpir tu silueta.</p></div></div>
+                <div class="tarjeta" data-id="6"><div class="tarjeta-bg" style="background-image: url('img/tratamiento-corporal.jpg');"></div><div class="tarjeta-contenido"><h3>Tratamientos Corporales</h3><p>Descubre nuestras envolturas y exfoliaciones corporales para nutrir y suavizar cada centímetro de tu piel.</p></div></div>
             </div>
         </div>
     </section>
     
-    <div class="service-card-overlay"></div>
-
     <section class="testimonial" id="testimonial">
         <div class="container"><div class="testimonial-content"><blockquote>"Desde que descubrí Aura, el cuidado de mi piel ha pasado de ser una rutina a ser mi ritual favorito. La profesionalidad y la calidez son inigualables."</blockquote><cite>- Sofía L.</cite></div></div>
     </section>
@@ -167,101 +166,83 @@
         <div class="container"><h2>¿Lista para empezar tu viaje de bienestar?</h2><p>Encuéntrame en C/ de la Serenidad, 123, Barcelona | Teléfono: 600 123 456</p><br><a href="mailto:hola@aurastudio.com" class="btn">Enviar un Email</a><br><br><br><p>&copy; 2025 Aura Beauty Studio. Diseñado con ♡.</p></div>
     </footer>
 
+    <!-- SVG Filter para el efecto "Gooey" -->
+    <svg style="position:absolute; width:0; height:0;">
+      <defs>
+        <filter id="gooey">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+          <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -7" result="goo" />
+          <feBlend in="SourceGraphic" in2="goo" />
+        </filter>
+      </defs>
+    </svg>
+    
+    <!-- Librerías de Animación -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
-    <!-- NUEVO: AÑADIDO EL PLUGIN FLIP DE GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Flip.min.js"></script>
+    
     <script>
         gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, Flip);
 
-        // --- LÓGICA DE ANIMACIÓN GENERAL (SIN CAMBIOS) ---
-        // ... (el código de animación del hero, header, etc. se mantiene igual) ...
+        // --- ANIMACIONES GENERALES DE LA PÁGINA ---
+        const tl = gsap.timeline({defaults: {ease: "power3.out"}});
+        tl.from('.logo', {opacity: 0, y: -20, duration: 0.8, delay: 0.3}).from('.nav-links a', {opacity: 0, y: -20, duration: 0.6, stagger: 0.2}, "-=0.6").from('#hero-subtitle', {opacity: 0, y: 20, duration: 0.8}, "-=0.6").from('#hero-title', {opacity: 0, y: 20, duration: 1}, "-=0.6").from('#hero-text', {opacity: 0, y: 20, duration: 1}, "-=0.8").from('#hero-btn', {opacity: 0, y: 20, duration: 1}, "-=0.8");
+        const header = document.querySelector('.header');
+        window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 50); });
+        let isAnimatingScroll = false;
+        function goToSection(e) { if (isAnimatingScroll) { e.preventDefault(); return; } if (window.scrollY === 0 && e.deltaY > 0) { e.preventDefault(); isAnimatingScroll = true; gsap.to(window, { duration: 1.5, scrollTo: "#services", ease: "power2.inOut", onComplete: () => { isAnimatingScroll = false; } }); } }
+        window.addEventListener('wheel', goToSection, { passive: false });
+        
+        // --- LÓGICA DEL MOSAICO DE SERVICIOS LÍQUIDO ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const tarjetas = gsap.utils.toArray('.services-grid .tarjeta');
+            const configuraciones = {
+                predeterminado: { 1: '1/1/3/2', 2: '1/2/3/4', 3: '1/4/2/5', 4: '2/4/3/5', 5: '3/1/4/2', 6: '3/2/4/5' },
+                hover1: { 1: '1/1/3/3', 2: '1/3/3/4', 3: '1/4/2/5', 4: '2/4/3/5', 5: '3/1/4/3', 6: '3/3/4/5' },
+                hover2: { 1: '1/1/3/2', 2: '1/2/3/4', 3: '1/4/2/5', 4: '2/4/3/5', 5: '3/1/4/2', 6: '3/2/4/5' },
+                hover3: { 1: '1/1/3/2', 2: '1/2/3/3', 3: '1/3/3/5', 4: '3/4/4/5', 5: '3/1/4/2', 6: '3/2/4/4' },
+                hover4: { 1: '1/1/3/2', 2: '1/2/2/4', 3: '1/4/2/5', 4: '2/3/4/5', 5: '3/1/4/2', 6: '2/2/4/3' },
+                hover5: { 1: '1/1/2/2', 2: '1/2/2/4', 3: '1/4/2/5', 4: '2/3/3/5', 5: '2/1/4/3', 6: '3/3/4/5' },
+                hover6: { 1: '1/1/3/2', 2: '1/2/2/4', 3: '1/4/2/5', 4: '2/4/4/5', 5: '3/1/4/2', 6: '2/2/4/4' }
+            };
+            let estadoActivo = 'predeterminado';
 
-        // --- NUEVA LÓGICA PARA EL MOSAICO "SPOTLIGHT" ---
+            function aplicarConfiguracion(configKey) {
+                const state = Flip.getState(tarjetas);
+                const config = configuraciones[configKey];
+                
+                tarjetas.forEach(tarjeta => {
+                    const id = tarjeta.dataset.id;
+                    tarjeta.style.gridArea = config[id];
+                    if (configKey === 'predeterminado') {
+                        tarjeta.classList.remove('activo', 'atenuado');
+                    } else {
+                        const idTarjetaActiva = configKey.replace('hover', '');
+                        tarjeta.classList.toggle('activo', id === idTarjetaActiva);
+                        tarjeta.classList.toggle('atenuado', id !== idTarjetaActiva);
+                    }
+                });
 
-        const grid = document.querySelector(".services-grid");
-        const cards = gsap.utils.toArray(".service-card");
-        const overlay = document.querySelector(".service-card-overlay");
+                Flip.from(state, {
+                    duration: 0.7,
+                    ease: "power3.inOut",
+                    stagger: 0.05,
+                    absolute: true,
+                });
+                estadoActivo = configKey;
+            }
 
-        // Animación de entrada para las tarjetas del mosaico
-        gsap.to(cards, {
-            opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: "power3.out",
-            scrollTrigger: { trigger: ".services-grid", start: "top 80%" }
+            aplicarConfiguracion('predeterminado');
+
+            tarjetas.forEach(tarjeta => {
+                tarjeta.addEventListener('click', () => {
+                    const proximoEstado = `hover${tarjeta.dataset.id}`;
+                    aplicarConfiguracion(estadoActivo === proximoEstado ? 'predeterminado' : proximoEstado);
+                });
+            });
         });
-
-        const isTouchDevice = 'ontouchstart' in window;
-        document.body.classList.add(isTouchDevice ? 'touch' : 'desktop');
-
-        if (!isTouchDevice) {
-            // LÓGICA DE HOVER "SPOTLIGHT" PARA ESCRITORIO
-            cards.forEach(card => {
-                card.addEventListener('mouseenter', (e) => {
-                    const hoveredCard = e.currentTarget;
-                    // 1. Grabar estado inicial
-                    const state = Flip.getState(cards);
-                    
-                    // 2. Aplicar clases para el estado final
-                    grid.style.minHeight = grid.offsetHeight + "px"; // Evita que el grid colapse
-                    cards.forEach(c => c.classList.remove('spotlight'));
-                    hoveredCard.classList.add('spotlight');
-                    cards.filter(c => c !== hoveredCard).forEach(c => c.classList.add('dimmed'));
-
-                    // 3. Animar desde el estado inicial al final
-                    Flip.from(state, {
-                        duration: 0.5,
-                        ease: "power3.inOut",
-                        absolute: true, // Permite animar desde el grid a position: absolute
-                        nested: true
-                    });
-                });
-
-                card.addEventListener('mouseleave', (e) => {
-                    const hoveredCard = e.currentTarget;
-                    // 1. Grabar estado (el estado "spotlight")
-                    const state = Flip.getState(cards);
-
-                    // 2. Quitar clases para volver al estado del grid
-                    cards.forEach(c => c.classList.remove('spotlight', 'dimmed'));
-                    
-                    // 3. Animar de vuelta
-                    Flip.from(state, {
-                        duration: 0.5,
-                        ease: "power3.inOut",
-                        absolute: true,
-                        nested: true,
-                        onComplete: () => {
-                            grid.style.minHeight = ""; // Limpiar la altura fija
-                        }
-                    });
-                });
-            });
-        } else {
-            // LÓGICA DE CLIC PARA MÓVILES (SIN CAMBIOS)
-            cards.forEach(card => {
-                const closeBtn = card.querySelector('.service-card-close-btn');
-                card.addEventListener('click', () => {
-                    if (card.classList.contains('is-active')) return;
-                    document.body.classList.add('modal-open');
-                    overlay.classList.add('is-active');
-                    card.classList.add('is-active');
-                    gsap.fromTo(card, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'power3.out' });
-                });
-                const closeModal = () => {
-                    document.body.classList.remove('modal-open');
-                    overlay.classList.remove('is-active');
-                    gsap.to(card, {
-                        opacity: 0, scale: 0.8, duration: 0.4, ease: 'power3.in',
-                        onComplete: () => {
-                            card.classList.remove('is-active');
-                            gsap.set(card, { clearProps: "all" });
-                        }
-                    });
-                };
-                closeBtn.addEventListener('click', (e) => { e.stopPropagation(); closeModal(); });
-                overlay.addEventListener('click', () => { if (card.classList.contains('is-active')) { closeModal(); } });
-            });
-        }
     </script>
 </body>
 </html>
