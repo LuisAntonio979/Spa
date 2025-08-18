@@ -248,8 +248,8 @@
     
     <script>
         gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, Flip);
+
         const tl = gsap.timeline({defaults: {ease: "power3.out"}});
-        // Ajuste para evitar animar los enlaces de navegación en la carga inicial si el menú móvil está activo
         if (window.innerWidth > 768) {
             tl.from('.nav-links a', {opacity: 0, y: -20, duration: 0.6, stagger: 0.2});
         }
