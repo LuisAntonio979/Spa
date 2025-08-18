@@ -39,10 +39,10 @@
         h2.section-title { text-align: center; margin-bottom: 80px; position: relative; }
         h2.section-title::after { content: ''; width: 60px; height: 2px; background: var(--color-primary); position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); }
         p { margin-bottom: 20px; max-width: 650px; }
-        .header { position: fixed; width: 100%; padding: 18px 0; z-index: 100; transition: background-color 0.3s ease, padding 0.3s ease; }
+        .header { position: fixed; width: 100%; padding: 18px 0; z-index: 1000; transition: background-color 0.3s ease, padding 0.3s ease; }
         .header.scrolled { background-color: rgba(247, 244, 237, 0.9); backdrop-filter: blur(10px); }
         .navbar { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: var(--font-heading); font-weight: 700; font-size: 1.5rem; text-decoration: none; color: var(--color-text); }
+        .logo { font-family: var(--font-heading); font-weight: 700; font-size: 1.5rem; text-decoration: none; color: var(--color-text); z-index: 10; }
         .nav-links a { margin: 0 20px; text-decoration: none; color: var(--color-text); font-weight: 600; position: relative; padding-bottom: 5px; }
         .nav-links a::after { content: ''; position: absolute; width: 0; height: 1.5px; display: block; margin-top: 5px; right: 0; background: var(--color-primary); transition: width 0.3s ease; }
         .nav-links a:hover::after { width: 100%; left: 0; background: var(--color-primary); }
@@ -54,83 +54,91 @@
         .btn:hover { transform: translateY(-3px); box-shadow: 0 4px 20px rgba(62, 39, 35, 0.25); }
 
         #ritual-steps { background-color: #EAE6DA; }
-        .steps-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 40px;
-            text-align: center;
-        }
-        .step .icon {
-            font-family: 'Material Symbols Outlined';
-            font-size: 2.5rem;
-            color: var(--color-primary);
-            margin-bottom: 15px;
-            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 48;
-            vertical-align: middle;
-        }
-        .step h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: var(--color-text);
-        }
-        .step p {
-            max-width: 100%;
-            margin: 0 auto;
-        }
+        .steps-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; text-align: center; }
+        .step .icon { font-family: 'Material Symbols Outlined'; font-size: 2.5rem; color: var(--color-primary); margin-bottom: 15px; font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 48; vertical-align: middle; }
+        .step h3 { font-size: 1.5rem; margin-bottom: 10px; color: var(--color-text); }
+        .step p { max-width: 100%; margin: 0 auto; }
 
-        .services-grid {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+        .services-grid { width: 100%; display: flex; flex-direction: column; gap: 20px; }
+        .tarjeta { border-radius: 12px; position: relative; overflow: hidden; z-index: 1; color: white; width: 100%; aspect-ratio: 16 / 10; }
+        .tarjeta-bg { position: absolute; inset: 0; width: 100%; height: 100%; background-size: cover; background-position: center; z-index: -1; }
+        .tarjeta::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.1) 60%); }
+        .tarjeta-contenido { position: absolute; inset: 0; padding: 24px; display: flex; flex-direction: column; justify-content: flex-end; }
+        .tarjeta-contenido h3 { font-family: var(--font-heading); font-size: 1.5rem; line-height: 1.2; margin: 0; color: white; }
+        .tarjeta-contenido p { font-family: var(--font-body); font-size: 0.9rem; line-height: 1.5; margin-top: 10px; opacity: 1; max-height: 100px; }
+        
+        .testimonial { background-color: var(--color-primary); color: var(--color-background); text-align: center; }
+        .testimonial-content blockquote { font-family: var(--font-heading); font-size: 2rem; line-height: 1.5; max-width: 800px; margin: 0 auto 30px; font-style: italic; color: var(--color-background); }
+        .testimonial-content cite { font-weight: 600; font-style: normal; color: var(--color-background); opacity: 0.9; }
+        .footer { background: #EAE6DA; text-align: center; padding: 50px 0; }
+        .footer p { max-width: none; margin: 0; }
+
+        /* --- NUEVO: ESTILOS PARA MENÚ MÓVIL Y AJUSTES RESPONSIVOS --- */
+        .menu-toggle { display: none; } /* Oculto en desktop por defecto */
+
+        @media (max-width: 768px) {
+            .container { padding: 0 20px; }
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: 0;
+                width: 100%;
+                height: 100vh;
+                background-color: var(--color-background);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                display: flex;
+                transform: translateX(100%);
+                transition: transform 0.3s ease-in-out;
+            }
+            .nav-links.active {
+                transform: translateX(0);
+            }
+            .nav-links a {
+                margin: 20px 0;
+                font-size: 1.5rem;
+            }
+            .menu-toggle {
+                display: block;
+                background: none;
+                border: none;
+                cursor: pointer;
+                z-index: 10;
+            }
+            .hamburger {
+                display: block;
+                width: 25px;
+                height: 3px;
+                background-color: var(--color-text);
+                position: relative;
+                transition: background-color 0.3s ease-in-out;
+            }
+            .hamburger::before,
+            .hamburger::after {
+                content: '';
+                position: absolute;
+                width: 100%;
+                height: 3px;
+                background-color: var(--color-text);
+                left: 0;
+                transition: transform 0.3s ease-in-out;
+            }
+            .hamburger::before { top: -8px; }
+            .hamburger::after { bottom: -8px; }
+            
+            .menu-toggle.active .hamburger { background-color: transparent; }
+            .menu-toggle.active .hamburger::before { transform: rotate(45deg) translate(5px, 6px); }
+            .menu-toggle.active .hamburger::after { transform: rotate(-45deg) translate(5px, -6px); }
+
+            .hero-content {
+                max-width: 90%;
+            }
+            .hero-content .subtitle {
+                margin-top: 0;
+            }
         }
-        .tarjeta {
-            border-radius: 12px;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-            color: white;
-            width: 100%;
-            aspect-ratio: 16 / 10;
-        }
-        .tarjeta-bg {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            z-index: -1;
-        }
-        .tarjeta::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.1) 60%);
-        }
-        .tarjeta-contenido {
-            position: absolute;
-            inset: 0;
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-        }
-        .tarjeta-contenido h3 {
-            font-family: var(--font-heading);
-            font-size: 1.5rem;
-            line-height: 1.2;
-            margin: 0;
-            color: white;
-        }
-        .tarjeta-contenido p {
-            font-family: var(--font-body);
-            font-size: 0.9rem;
-            line-height: 1.5;
-            margin-top: 10px;
-            opacity: 1;
-            max-height: 100px;
-        }
+        
         @media (min-width: 769px) {
             .services-grid {
                 display: grid;
@@ -155,40 +163,34 @@
                 transform: translateY(10px);
                 transition: opacity 0.3s ease-out, max-height 0.3s ease-out, transform 0.3s ease-out;
             }
-            .tarjeta.atenuado {
-                opacity: 0.45;
-                filter: grayscale(50%);
-                z-index: 1;
-            }
-            .tarjeta.activo {
-                transform: scale(1.02);
-                box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.2);
-                z-index: 10;
-            }
-            .tarjeta.activo .tarjeta-contenido p {
-                opacity: 1;
-                max-height: 100px;
-                transform: translateY(0);
-            }
+            .tarjeta.atenuado { opacity: 0.45; filter: grayscale(50%); z-index: 1; }
+            .tarjeta.activo { transform: scale(1.02); box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.2); z-index: 10; }
+            .tarjeta.activo .tarjeta-contenido p { opacity: 1; max-height: 100px; transform: translateY(0); }
         }
-
-        .testimonial { background-color: var(--color-primary); color: var(--color-background); text-align: center; }
-        .testimonial-content blockquote { font-family: var(--font-heading); font-size: 2rem; line-height: 1.5; max-width: 800px; margin: 0 auto 30px; font-style: italic; color: var(--color-background); }
-        .testimonial-content cite { font-weight: 600; font-style: normal; color: var(--color-background); opacity: 0.9; }
-        .footer { background: #EAE6DA; text-align: center; padding: 50px 0; }
-        .footer p { max-width: none; margin: 0; }
     </style>
 </head>
 <body>
 
     <header class="header">
-        <div class="container"><nav class="navbar"><a href="#" class="logo">AlbaVita</a><div class="nav-links"><a href="#ritual-steps">El Ritual</a><a href="#services">Servicios</a><a href="#testimonial">Testimonios</a></div></nav></div>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">AlbaVita</a>
+                <div class="nav-links">
+                    <a href="#ritual-steps">El Ritual</a>
+                    <a href="#services">Servicios</a>
+                    <a href="#testimonial">Testimonios</a>
+                </div>
+                <button class="menu-toggle" aria-label="Abrir menú">
+                    <span class="hamburger"></span>
+                </button>
+            </nav>
+        </div>
     </header>
 
     <section class="hero" id="home">
         <div class="container">
             <div class="hero-content">
-                <p class="subtitle" id="hero-subtitle">Bienestar & Belleza Consciente</p>
+                <p class="subtitle" id="hero-subtitle">Tu Ritual. Tu Espacio.</p>
                 <h1 id="hero-title">Tu Santuario Personal. Entregado.</h1>
                 <p id="hero-text">Transformamos un espacio de tu hogar en un oasis de calma. Rituales de belleza y bienestar sincronizados con tu ritmo de vida, utilizando ingredientes puros de origen local. Tu pausa, a tu manera.</p>
                 <a href="#ritual-steps" class="btn" id="hero-btn">Descubre tu Ritual</a>
@@ -200,21 +202,9 @@
         <div class="container">
             <h2 class="section-title">Tu Ritual en 3 Pasos</h2>
             <div class="steps-container">
-                <div class="step">
-                    <span class="icon">sync</span>
-                    <h3>1. Sincroniza</h3>
-                    <p>Todo empieza contigo. A través de un breve diagnóstico, adaptamos cada ritual a tu ciclo, tu energía y tus necesidades del momento.</p>
-                </div>
-                <div class="step">
-                    <span class="icon">home_health</span>
-                    <h3>2. Transforma</h3>
-                    <p>Llegamos con nuestro Kit Santuario. Aromas, sonidos y texturas que convierten tu espacio en un refugio de paz antes de que el tratamiento comience.</p>
-                </div>
-                <div class="step">
-                    <span class="icon">graphic_eq</span>
-                    <h3>3. Continúa</h3>
-                    <p>El bienestar perdura. Después de tu sesión, recibirás una guía post-ritual personalizada para prolongar la sensación de calma y equilibrio en tu día a día.</p>
-                </div>
+                <div class="step"><span class="icon">sync</span><h3>1. Sincroniza</h3><p>Todo empieza contigo. A través de un breve diagnóstico, adaptamos cada ritual a tu ciclo, tu energía y tus necesidades del momento.</p></div>
+                <div class="step"><span class="icon">home_health</span><h3>2. Transforma</h3><p>Llegamos con nuestro Kit Santuario. Aromas, sonidos y texturas que convierten tu espacio en un refugio de paz antes de que el tratamiento comience.</p></div>
+                <div class="step"><span class="icon">graphic_eq</span><h3>3. Continúa</h3><p>El bienestar perdura. Después de tu sesión, recibirás una guía post-ritual personalizada para prolongar la sensación de calma y equilibrio en tu día a día.</p></div>
             </div>
         </div>
     </section>
@@ -260,16 +250,32 @@
         gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, Flip);
 
         const tl = gsap.timeline({defaults: {ease: "power3.out"}});
-        tl.from('.logo', {opacity: 0, y: -20, duration: 0.8, delay: 0.3}).from('.nav-links a', {opacity: 0, y: -20, duration: 0.6, stagger: 0.2}, "-=0.6").from('#hero-subtitle', {opacity: 0, y: 20, duration: 0.8}, "-=0.6").from('#hero-title', {opacity: 0, y: 20, duration: 1}, "-=0.6").from('#hero-text', {opacity: 0, y: 20, duration: 1}, "-=0.8").from('#hero-btn', {opacity: 0, y: 20, duration: 1}, "-=0.8");
+        // Ajuste para evitar animar los enlaces de navegación en la carga inicial si el menú móvil está activo
+        if (window.innerWidth > 768) {
+            tl.from('.nav-links a', {opacity: 0, y: -20, duration: 0.6, stagger: 0.2}, "-=0.6");
+        }
+        tl.from('.logo', {opacity: 0, y: -20, duration: 0.8, delay: 0.3})
+          .from('#hero-subtitle', {opacity: 0, y: 20, duration: 0.8}, "-=0.6")
+          .from('#hero-title', {opacity: 0, y: 20, duration: 1}, "-=0.6")
+          .from('#hero-text', {opacity: 0, y: 20, duration: 1}, "-=0.8")
+          .from('#hero-btn', {opacity: 0, y: 20, duration: 1}, "-=0.8");
+        
         const header = document.querySelector('.header');
         window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 50); });
+        
         let isAnimatingScroll = false;
         function goToSection(e) { if (isAnimatingScroll) { e.preventDefault(); return; } if (window.scrollY === 0 && e.deltaY > 0) { e.preventDefault(); isAnimatingScroll = true; gsap.to(window, { duration: 1.5, scrollTo: "#services", ease: "power2.inOut", onComplete: () => { isAnimatingScroll = false; } }); } }
         window.addEventListener('wheel', goToSection, { passive: false });
         
         document.addEventListener('DOMContentLoaded', () => {
-            const mm = gsap.matchMedia();
-            mm.add("(min-width: 769px)", () => {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            menuToggle.addEventListener('click', () => {
+                menuToggle.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+
+            gsap.matchMedia().add("(min-width: 769px)", () => {
                 const grid = document.querySelector('.services-grid');
                 const tarjetas = gsap.utils.toArray('.services-grid .tarjeta');
                 const configuraciones = {
