@@ -52,12 +52,6 @@
         .hero-content p { margin: 30px 0; }
         .btn { display: inline-block; padding: 12px 30px; background: var(--color-primary); color: white; text-decoration: none; border-radius: 50px; font-weight: 600; transition: all 0.3s ease; }
         .btn:hover { transform: translateY(-3px); box-shadow: 0 4px 20px rgba(62, 39, 35, 0.25); }
-
-        /* AÑADIDO: Previene el "flash" de contenido al cargar la página */
-        .logo, .nav-links a, #hero-subtitle, #hero-title, #hero-text, #hero-btn {
-            opacity: 0;
-        }
-
         #ritual-steps { background-color: #EAE6DA; }
         .steps-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; text-align: center; }
         .step .icon { font-family: 'Material Symbols Outlined'; font-size: 2.5rem; color: var(--color-primary); margin-bottom: 15px; font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 48; vertical-align: middle; }
@@ -82,8 +76,6 @@
             .nav-links { position: fixed; top: 0; right: 0; width: 100%; height: 100vh; background-color: var(--color-background); flex-direction: column; justify-content: center; align-items: center; display: flex; transform: translateX(100%); transition: transform 0.3s ease-in-out; }
             .nav-links.active { transform: translateX(0); }
             .nav-links a { margin: 20px 0; font-size: 1.5rem; }
-            /* Se añade opacity: 1 !important para asegurar que los enlaces sean visibles dentro del menú móvil activo */
-            .nav-links.active a { opacity: 1 !important; }
             .menu-toggle { display: block; background: none; border: none; cursor: pointer; z-index: 10; }
             .hamburger { display: block; width: 25px; height: 3px; background-color: var(--color-text); position: relative; transition: background-color 0.3s ease-in-out; }
             .hamburger::before, .hamburger::after { content: ''; position: absolute; width: 100%; height: 3px; background-color: var(--color-text); left: 0; transition: transform 0.3s ease-in-out; }
@@ -169,18 +161,18 @@
     <script>
         gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, Flip);
 
-        // MODIFICADO: La línea de tiempo de animación de entrada se ha reestructurado
-        const tl = gsap.timeline({defaults: {ease: "power3.out"}});
-        tl.from('.logo', {opacity: 0, y: -20, duration: 0.8, delay: 0.3});
-        
-        if (window.innerWidth > 768) {
-            tl.from('.nav-links a', {opacity: 0, y: -20, duration: 0.6, stagger: 0.2}, "-=0.6");
-        }
+        // MODIFICADO: Lógica de animación de entrada corregida
+        // Oculta los elementos con GSAP para prevenir el "flash"
+        gsap.set(['.logo', '.nav-links a', '#hero-subtitle', '#hero-title', '#hero-text', '#hero-btn'], { autoAlpha: 0 });
 
-        tl.from('#hero-subtitle', {opacity: 0, y: 20, duration: 0.8}, "-=0.6")
-          .from('#hero-title', {opacity: 0, y: 20, duration: 1}, "-=0.6")
-          .from('#hero-text', {opacity: 0, y: 20, duration: 1}, "-=0.8")
-          .from('#hero-btn', {opacity: 0, y: 20, duration: 1}, "-=0.8");
+        const tl = gsap.timeline({defaults: {ease: "power3.out"}});
+
+        tl.to('.logo', {y: 0, autoAlpha: 1, duration: 0.8, delay: 0.3})
+          .to('.nav-links a', {y: 0, autoAlpha: 1, duration: 0.6, stagger: 0.2}, "-=0.6")
+          .to('#hero-subtitle', {y: 0, autoAlpha: 1, duration: 0.8}, "-=0.6")
+          .to('#hero-title', {y: 0, autoAlpha: 1, duration: 1}, "-=0.6")
+          .to('#hero-text', {y: 0, autoAlpha: 1, duration: 1}, "-=0.8")
+          .to('#hero-btn', {y: 0, autoAlpha: 1, duration: 1}, "-=0.8");
         
         const header = document.querySelector('.header');
         window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 50); });
