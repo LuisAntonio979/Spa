@@ -31,32 +31,123 @@
             overflow-x: hidden;
             background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjZjdmNGVkIj48L3JlY3Q+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9ImNzY2FjNCIgb3BhY2l0eT0iMC4xIj48L3JlY3Q+Cjwvc3ZnPg==');
         }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
-        section { padding: 120px 0; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        section { padding: 100px 0; }
         h1, h2, h3 { font-family: var(--font-heading); font-weight: 500; line-height: 1.2; color: var(--color-text); }
-        h1 { font-size: clamp(3rem, 6vw, 5rem); }
-        h2 { font-size: 2.8rem; margin-bottom: 40px; }
-        h2.section-title { text-align: center; margin-bottom: 80px; position: relative; }
+        h1 { font-size: clamp(2.5rem, 8vw, 5rem); } /* Ajustado para móvil */
+        h2 { font-size: 2.2rem; margin-bottom: 30px; } /* Ajustado para móvil */
+        h2.section-title { text-align: center; margin-bottom: 60px; position: relative; }
         h2.section-title::after { content: ''; width: 60px; height: 2px; background: var(--color-primary); position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); }
         p { margin-bottom: 20px; max-width: 650px; }
-        .header { position: fixed; width: 100%; padding: 18px 0; z-index: 1000; transition: background-color 0.3s ease, padding 0.3s ease; }
-        .header.scrolled { background-color: rgba(247, 244, 237, 0.9); backdrop-filter: blur(10px); }
+        
+        /* --- CABECERA Y NAVEGACIÓN MÓVIL --- */
+        .header { position: fixed; width: 100%; padding: 15px 0; z-index: 1000; transition: background-color 0.3s ease, padding 0.3s ease; }
+        .header.scrolled { background-color: rgba(247, 244, 237, 0.85); backdrop-filter: blur(10px); }
         .navbar { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: var(--font-heading); font-weight: 700; font-size: 1.5rem; text-decoration: none; color: var(--color-text); z-index: 10; }
-        .nav-links a { margin: 0 20px; text-decoration: none; color: var(--color-text); font-weight: 600; position: relative; padding-bottom: 5px; }
-        .nav-links a::after { content: ''; position: absolute; width: 0; height: 1.5px; display: block; margin-top: 5px; right: 0; background: var(--color-primary); transition: width 0.3s ease; }
-        .nav-links a:hover::after { width: 100%; left: 0; background: var(--color-primary); }
-        .hero { height: 100vh; display: flex; align-items: center; background-image: linear-gradient(to right, rgba(247, 244, 237, 1) 30%, rgba(247, 244, 237, 0.2)), url('img/masaje-hero.webp'); background-size: cover; background-position: 0 0, calc(50% + 200px) 20%; }
-        .hero-content { max-width: 50%; }
-        .hero-content .subtitle { font-weight: 600; font-size: 1rem; color: var(--color-accent); letter-spacing: 2px; text-transform: uppercase; margin-top: 70px; margin-bottom: 5px; }
-        .hero-content p { margin: 30px 0; }
+        .logo { font-family: var(--font-heading); font-weight: 700; font-size: 1.5rem; text-decoration: none; color: var(--color-text); z-index: 1001; }
+        
+        .nav-toggle {
+            display: block;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1001;
+        }
+        .nav-toggle .hamburger {
+            display: block;
+            width: 28px;
+            height: 3px;
+            background-color: var(--color-text);
+            position: relative;
+            transition: transform 0.3s ease-in-out;
+        }
+        .nav-toggle .hamburger::before,
+        .nav-toggle .hamburger::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--color-text);
+            transition: top 0.3s ease-in-out 0.3s, transform 0.3s ease-in-out;
+        }
+        .nav-toggle .hamburger::before { top: -8px; }
+        .nav-toggle .hamburger::after { top: 8px; }
+
+        .nav-links {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 70%;
+            height: 100vh;
+            background-color: var(--color-background);
+            padding-top: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+            z-index: 1000;
+        }
+        .nav-links.is-open {
+            transform: translateX(0);
+        }
+        .nav-links a { font-size: 1.5rem; text-decoration: none; color: var(--color-text); font-weight: 600; }
+        
+        .nav-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        .nav-overlay.is-open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .nav-toggle.is-active .hamburger { background-color: transparent; }
+        .nav-toggle.is-active .hamburger::before { top: 0; transform: rotate(45deg); transition: top 0.3s ease-in-out, transform 0.3s ease-in-out 0.3s; }
+        .nav-toggle.is-active .hamburger::after { top: 0; transform: rotate(-45deg); transition: top 0.3s ease-in-out, transform 0.3s ease-in-out 0.3s; }
+        
+        /* --- HERO SECTION --- */
+        .hero { 
+            height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            background-image: linear-gradient(to right, rgba(247, 244, 237, 1) 80%, rgba(247, 244, 237, 0.2)), url('img/masaje-hero.webp'); 
+            background-size: cover; 
+            background-position: 0 0, center; 
+        }
+        .hero-content { 
+            max-width: 90%; /* Ajustado para móvil */
+            margin: 0 auto; 
+            text-align: center;
+        }
+        .hero-content .subtitle { 
+            font-weight: 600; 
+            font-size: 1rem; 
+            color: var(--color-accent); 
+            letter-spacing: 2px; 
+            text-transform: uppercase; 
+            margin-top: 0; /* Ajustado para móvil */
+            margin-bottom: 10px; 
+        }
+        .hero-content p { margin: 20px 0 30px; }
         .btn { display: inline-block; padding: 12px 30px; background: var(--color-primary); color: white; text-decoration: none; border-radius: 50px; font-weight: 600; transition: all 0.3s ease; }
         .btn:hover { transform: translateY(-3px); box-shadow: 0 4px 20px rgba(62, 39, 35, 0.25); }
+
+        /* --- SECCIÓN RITUAL Y DEMÁS --- */
         #ritual-steps { background-color: #EAE6DA; }
         .steps-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; text-align: center; }
         .step .icon { font-family: 'Material Symbols Outlined'; font-size: 2.5rem; color: var(--color-primary); margin-bottom: 15px; font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 48; vertical-align: middle; }
         .step h3 { font-size: 1.5rem; margin-bottom: 10px; color: var(--color-text); }
         .step p { max-width: 100%; margin: 0 auto; }
+
         .services-grid { width: 100%; display: flex; flex-direction: column; gap: 20px; }
         .tarjeta { border-radius: 12px; position: relative; overflow: hidden; z-index: 1; color: white; width: 100%; aspect-ratio: 16 / 10; }
         .tarjeta-bg { position: absolute; inset: 0; width: 100%; height: 100%; background-size: cover; background-position: center; z-index: -1; }
@@ -64,50 +155,93 @@
         .tarjeta-contenido { position: absolute; inset: 0; padding: 24px; display: flex; flex-direction: column; justify-content: flex-end; }
         .tarjeta-contenido h3 { font-family: var(--font-heading); font-size: 1.5rem; line-height: 1.2; margin: 0; color: white; }
         .tarjeta-contenido p { font-family: var(--font-body); font-size: 0.9rem; line-height: 1.5; margin-top: 10px; opacity: 1; max-height: 100px; }
+        
         .testimonial { background-color: var(--color-primary); color: var(--color-background); text-align: center; }
-        .testimonial-content blockquote { font-family: var(--font-heading); font-size: 2rem; line-height: 1.5; max-width: 800px; margin: 0 auto 30px; font-style: italic; color: var(--color-background); }
+        .testimonial-content blockquote { font-family: var(--font-heading); font-size: 1.8rem; line-height: 1.5; max-width: 800px; margin: 0 auto 30px; font-style: italic; color: var(--color-background); }
         .testimonial-content cite { font-weight: 600; font-style: normal; color: var(--color-background); opacity: 0.9; }
         .footer { background: #EAE6DA; text-align: center; padding: 50px 0; }
         .footer p { max-width: none; margin: 0; }
-        .menu-toggle { display: none; }
 
-        @media (max-width: 768px) {
-            .container { padding: 0 20px; }
-            .nav-links { position: fixed; top: 0; right: 0; width: 100%; height: 100vh; background-color: var(--color-background); flex-direction: column; justify-content: center; align-items: center; display: flex; transform: translateX(100%); transition: transform 0.3s ease-in-out; }
-            .nav-links.active { transform: translateX(0); }
-            .nav-links a { margin: 20px 0; font-size: 1.5rem; }
-            .menu-toggle { display: block; background: none; border: none; cursor: pointer; z-index: 10; }
-            .hamburger { display: block; width: 25px; height: 3px; background-color: var(--color-text); position: relative; transition: background-color 0.3s ease-in-out; }
-            .hamburger::before, .hamburger::after { content: ''; position: absolute; width: 100%; height: 3px; background-color: var(--color-text); left: 0; transition: transform 0.3s ease-in-out; }
-            .hamburger::before { top: -8px; }
-            .hamburger::after { bottom: -8px; }
-            .menu-toggle.active .hamburger { background-color: transparent; }
-            .menu-toggle.active .hamburger::before { transform: rotate(45deg) translate(5px, 6px); }
-            .menu-toggle.active .hamburger::after { transform: rotate(-45deg) translate(5px, -6px); }
-            .hero-content { max-width: 90%; }
-            .hero-content .subtitle { margin-top: 0; }
-        }
-        
+        /* --- ESTILOS PARA PANTALLAS GRANDES --- */
         @media (min-width: 769px) {
-            .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(3, 1fr); gap: 1%; aspect-ratio: 1.6 / 1; filter: url(#gooey); }
+            .container { padding: 0 40px; }
+            section { padding: 120px 0; }
+            h1 { font-size: clamp(3rem, 6vw, 5rem); }
+            h2 { font-size: 2.8rem; margin-bottom: 40px; }
+            h2.section-title { margin-bottom: 80px; }
+            .nav-toggle { display: none; }
+            .nav-overlay { display: none; }
+            .nav-links {
+                position: static;
+                height: auto;
+                width: auto;
+                background-color: transparent;
+                padding-top: 0;
+                flex-direction: row;
+                transform: translateX(0);
+                transition: none;
+            }
+            .nav-links a { font-size: 1rem; }
+            .header { padding: 18px 0; }
+            .hero { background-image: linear-gradient(to right, rgba(247, 244, 237, 1) 30%, rgba(247, 244, 237, 0.2)), url('img/masaje-hero.webp'); background-position: 0 0, calc(50% + 200px) 20%; }
+            .hero-content { max-width: 50%; margin: 0; text-align: left; }
+            .hero-content .subtitle { margin-top: 70px; margin-bottom: 5px; }
+            .hero-content p { margin: 30px 0; }
+
+            .services-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-rows: repeat(3, 1fr);
+                gap: 1%;
+                aspect-ratio: 1.6 / 1;
+                filter: url(#gooey);
+            }
             .tarjeta { aspect-ratio: auto; border-radius: 0.8vw; cursor: pointer; }
             .tarjeta-contenido { padding: 1.5vw; }
             .tarjeta-contenido h3 { font-size: clamp(1rem, 1.5vw, 1.8rem); }
-            .tarjeta-contenido p { font-size: clamp(0.7rem, 0.8vw, 0.9rem); margin-top: 0.5vw; opacity: 0; max-height: 0; transform: translateY(10px); transition: opacity 0.3s ease-out, max-height 0.3s ease-out, transform 0.3s ease-out; }
+            .tarjeta-contenido p {
+                font-size: clamp(0.7rem, 0.8vw, 0.9rem);
+                margin-top: 0.5vw;
+                opacity: 0;
+                max-height: 0;
+                transform: translateY(10px);
+                transition: opacity 0.3s ease-out, max-height 0.3s ease-out, transform 0.3s ease-out;
+            }
             .tarjeta.atenuado { opacity: 0.45; filter: grayscale(50%); z-index: 1; }
             .tarjeta.activo { transform: scale(1.02); box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.2); z-index: 10; }
             .tarjeta.activo .tarjeta-contenido p { opacity: 1; max-height: 100px; transform: translateY(0); }
+            .testimonial-content blockquote { font-size: 2rem; }
         }
     </style>
 </head>
 <body>
-
     <header class="header">
-        <div class="container"><nav class="navbar"><a href="#" class="logo">AlbaVita</a><div class="nav-links"><a href="#ritual-steps">El Ritual</a><a href="#services">Servicios</a><a href="#testimonial">Testimonios</a><a href="#contact">Contacto</a></div><button class="menu-toggle" aria-label="Abrir menú"><span class="hamburger"></span></button></nav></div>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">AlbaVita</a>
+                <button class="nav-toggle" aria-label="Abrir menú">
+                    <span class="hamburger"></span>
+                </button>
+                <div class="nav-links">
+                    <a href="#ritual-steps">El Ritual</a>
+                    <a href="#services">Servicios</a>
+                    <a href="#testimonial">Testimonios</a>
+                    <a href="#contact">Contacto</a>
+                </div>
+            </nav>
+        </div>
+        <div class="nav-overlay"></div>
     </header>
 
     <section class="hero" id="home">
-        <div class="container"><div class="hero-content"><p class="subtitle" id="hero-subtitle">Tu Ritual. Tu Espacio.</p><h1 id="hero-title">Tu Santuario Personal. Entregado.</h1><p id="hero-text">Transformamos un espacio de tu hogar en un oasis de calma. Rituales de belleza y bienestar sincronizados con tu ritmo de vida, utilizando ingredientes puros de origen local. Tu pausa, a tu manera.</p><a href="#ritual-steps" class="btn" id="hero-btn">Descubre tu Ritual</a></div></div>
+        <div class="container">
+            <div class="hero-content">
+                <p class="subtitle" id="hero-subtitle">TU RITUAL. TU ESPACIO.</p>
+                <h1 id="hero-title">Tu Santuario Personal. Entregado.</h1>
+                <p id="hero-text">Transformamos un espacio de tu hogar en un oasis de calma. Rituales de belleza y bienestar sincronizados con tu ritmo de vida, utilizando ingredientes puros de origen local. Tu pausa, a tu manera.</p>
+                <a href="#ritual-steps" class="btn" id="hero-btn">Descubre tu Ritual</a>
+            </div>
+        </div>
     </section>
 
     <section id="ritual-steps">
@@ -161,41 +295,35 @@
     <script>
         gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, Flip);
 
-        // MODIFICADO: Lógica de animación de entrada corregida
-        // Oculta los elementos con GSAP para prevenir el "flash"
-        gsap.set(['.logo', '.nav-links a', '#hero-subtitle', '#hero-title', '#hero-text', '#hero-btn'], { autoAlpha: 0 });
-
         const tl = gsap.timeline({defaults: {ease: "power3.out"}});
-
-        tl.to('.logo', {y: 0, autoAlpha: 1, duration: 0.8, delay: 0.3})
-          .to('.nav-links a', {y: 0, autoAlpha: 1, duration: 0.6, stagger: 0.2}, "-=0.6")
-          .to('#hero-subtitle', {y: 0, autoAlpha: 1, duration: 0.8}, "-=0.6")
-          .to('#hero-title', {y: 0, autoAlpha: 1, duration: 1}, "-=0.6")
-          .to('#hero-text', {y: 0, autoAlpha: 1, duration: 1}, "-=0.8")
-          .to('#hero-btn', {y: 0, autoAlpha: 1, duration: 1}, "-=0.8");
-        
+        tl.from('.logo', {opacity: 0, y: -20, duration: 0.8, delay: 0.3}).from('.nav-links a', {opacity: 0, y: -20, duration: 0.6, stagger: 0.2}, "-=0.6").from('#hero-subtitle', {opacity: 0, y: 20, duration: 0.8}, "-=0.6").from('#hero-title', {opacity: 0, y: 20, duration: 1}, "-=0.6").from('#hero-text', {opacity: 0, y: 20, duration: 1}, "-=0.8").from('#hero-btn', {opacity: 0, y: 20, duration: 1}, "-=0.8");
         const header = document.querySelector('.header');
         window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 50); });
-        
         let isAnimatingScroll = false;
         function goToSection(e) { if (isAnimatingScroll) { e.preventDefault(); return; } if (window.scrollY === 0 && e.deltaY > 0) { e.preventDefault(); isAnimatingScroll = true; gsap.to(window, { duration: 1.5, scrollTo: "#services", ease: "power2.inOut", onComplete: () => { isAnimatingScroll = false; } }); } }
         window.addEventListener('wheel', goToSection, { passive: false });
         
         document.addEventListener('DOMContentLoaded', () => {
-            const menuToggle = document.querySelector('.menu-toggle');
+            // --- LÓGICA DEL MENÚ MÓVIL ---
+            const navToggle = document.querySelector('.nav-toggle');
             const navLinks = document.querySelector('.nav-links');
-            menuToggle.addEventListener('click', () => {
-                menuToggle.classList.toggle('active');
-                navLinks.classList.toggle('active');
-            });
-            navLinks.addEventListener('click', () => {
-                if (navLinks.classList.contains('active')) {
-                    menuToggle.classList.remove('active');
-                    navLinks.classList.remove('active');
-                }
+            const navOverlay = document.querySelector('.nav-overlay');
+
+            function toggleMenu() {
+                navToggle.classList.toggle('is-active');
+                navLinks.classList.toggle('is-open');
+                navOverlay.classList.toggle('is-open');
+            }
+
+            navToggle.addEventListener('click', toggleMenu);
+            navOverlay.addEventListener('click', toggleMenu);
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', toggleMenu);
             });
 
-            gsap.matchMedia().add("(min-width: 769px)", () => {
+            // --- LÓGICA DEL MOSAICO (SOLO PARA DESKTOP) ---
+            const mm = gsap.matchMedia();
+            mm.add("(min-width: 769px)", () => {
                 const grid = document.querySelector('.services-grid');
                 const tarjetas = gsap.utils.toArray('.services-grid .tarjeta');
                 const configuraciones = {
