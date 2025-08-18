@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Aura Beauty Studio - Belleza y Bienestar Holístico</title>
-    <meta name="description" content="Descubre Aura Beauty Studio, tu espacio de bienestar y belleza. Ofrecemos masajes, limpieza facial, manicura y tratamientos corporales personalizados con un enfoque holístico.">
+    <title>AlbaVita Beauty Studio - Belleza y Bienestar Holístico</title>
+    <meta name="description" content="Descubre AlbaVita Beauty Studio, tu espacio de bienestar y belleza. Ofrecemos masajes, limpieza facial, manicura y tratamientos corporales personalizados con un enfoque holístico.">
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@500;700&display=swap');
@@ -37,8 +37,19 @@
         h2.section-title { text-align: center; margin-bottom: 80px; position: relative; }
         h2.section-title::after { content: ''; width: 60px; height: 2px; background: var(--color-primary); position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); }
         p { margin-bottom: 20px; max-width: 650px; }
-        .header { position: fixed; width: 100%; padding: 30px 0; z-index: 100; transition: background-color 0.3s ease; }
-        .header.scrolled { background-color: rgba(247, 244, 237, 0.9); backdrop-filter: blur(10px); }
+        
+        .header { 
+            position: fixed; 
+            width: 100%; 
+            padding: 18px 0; 
+            z-index: 100; 
+            transition: background-color 0.3s ease, padding 0.3s ease; 
+        }
+
+        .header.scrolled { 
+            background-color: rgba(247, 244, 237, 0.9); 
+            backdrop-filter: blur(10px); 
+        }
         .navbar { display: flex; justify-content: space-between; align-items: center; }
         .logo { font-family: var(--font-heading); font-weight: 700; font-size: 1.5rem; text-decoration: none; color: var(--color-text); }
         .nav-links a { margin: 0 20px; text-decoration: none; color: var(--color-text); font-weight: 600; position: relative; padding-bottom: 5px; }
@@ -46,28 +57,36 @@
         .nav-links a:hover::after { width: 100%; left: 0; background: var(--color-primary); }
         .hero { height: 100vh; display: flex; align-items: center; background-image: linear-gradient(to right, rgba(247, 244, 237, 1) 30%, rgba(247, 244, 237, 0.2)), url('img/masaje-hero.webp'); background-size: cover; background-position: 0 0, calc(50% + 200px) 20%; }
         .hero-content { max-width: 50%; }
-        .hero-content .subtitle { font-weight: 600; font-size: 1rem; color: var(--color-accent); margin-bottom: 20px; letter-spacing: 2px; text-transform: uppercase; }
+        .hero-content .subtitle { 
+            font-weight: 600; 
+            font-size: 1rem; 
+            color: var(--color-accent); 
+            letter-spacing: 2px; 
+            text-transform: uppercase; 
+            margin-top: 70px;    /* <-- AÑADIDO */
+            margin-bottom: 5px;   /* <-- MODIFICADO */
+        }
         .hero-content p { margin: 30px 0; }
         .btn { display: inline-block; padding: 12px 30px; background: var(--color-primary); color: white; text-decoration: none; border-radius: 50px; font-weight: 600; transition: all 0.3s ease; }
         .btn:hover { transform: translateY(-3px); box-shadow: 0 4px 20px rgba(62, 39, 35, 0.25); }
 
-        /* --- SECCIÓN DE SERVICIOS --- */
-
-        /* MODIFICADO: Estilos base para Móvil (Lineal y Tradicional) */
         .services-grid {
             width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+            aspect-ratio: 1.6 / 1;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 1%;
+            position: relative;
+            filter: url(#gooey);
         }
         .tarjeta {
-            border-radius: 12px; /* Un poco más de radio para la vista lineal */
+            border-radius: 0.8vw;
             position: relative;
             overflow: hidden;
             z-index: 1;
+            cursor: pointer;
             color: white;
-            width: 100%;
-            aspect-ratio: 16 / 10;
         }
         .tarjeta-bg {
             position: absolute;
@@ -87,76 +106,44 @@
         .tarjeta-contenido {
             position: absolute;
             inset: 0;
-            padding: 24px;
+            padding: 1.5vw;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
         }
         .tarjeta-contenido h3 {
             font-family: var(--font-heading);
-            font-size: 1.5rem; /* Tamaño fijo para móvil */
+            font-size: clamp(1rem, 1.5vw, 1.8rem);
             line-height: 1.2;
             margin: 0;
             color: white;
         }
         .tarjeta-contenido p {
             font-family: var(--font-body);
-            font-size: 0.9rem; /* Tamaño fijo para móvil */
+            font-size: clamp(0.7rem, 0.8vw, 0.9rem);
             line-height: 1.5;
-            margin-top: 10px;
-            /* En móvil la descripción SIEMPRE es visible */
+            margin-top: 0.5vw;
+            opacity: 0;
+            max-height: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease-out, max-height 0.3s ease-out, transform 0.3s ease-out;
+        }
+        .tarjeta.atenuado {
+            opacity: 0.45;
+            filter: grayscale(50%);
+            z-index: 1;
+        }
+        .tarjeta.activo {
+            transform: scale(1.02);
+            box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+        .tarjeta.activo .tarjeta-contenido p {
             opacity: 1;
             max-height: 100px;
-        }
-        
-        /* MODIFICADO: Estilos para Desktop (Mosaico Interactivo) */
-        @media (min-width: 769px) {
-            .services-grid {
-                display: grid;
-                grid-template-columns: repeat(4, 1fr);
-                grid-template-rows: repeat(3, 1fr);
-                gap: 1%;
-                aspect-ratio: 1.6 / 1;
-                filter: url(#gooey);
-            }
-            .tarjeta {
-                aspect-ratio: auto; /* El grid controla el tamaño, no la tarjeta */
-                border-radius: 0.8vw;
-                cursor: pointer;
-            }
-            .tarjeta-contenido {
-                padding: 1.5vw;
-            }
-            .tarjeta-contenido h3 {
-                font-size: clamp(1rem, 1.5vw, 1.8rem);
-            }
-             .tarjeta-contenido p {
-                font-size: clamp(0.7rem, 0.8vw, 0.9rem);
-                margin-top: 0.5vw;
-                /* En desktop, la descripción vuelve a estar oculta */
-                opacity: 0;
-                max-height: 0;
-                transform: translateY(10px);
-                transition: opacity 0.3s ease-out, max-height 0.3s ease-out, transform 0.3s ease-out;
-            }
-            .tarjeta.atenuado {
-                opacity: 0.45;
-                filter: grayscale(50%);
-                z-index: 1;
-            }
-            .tarjeta.activo {
-                transform: scale(1.02);
-                box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.2);
-                z-index: 10;
-            }
-            .tarjeta.activo .tarjeta-contenido p {
-                opacity: 1;
-                max-height: 100px;
-                transform: translateY(0);
-            }
+            transform: translateY(0);
         }
 
-        /* --- Secciones Restantes --- */
         .testimonial { background-color: var(--color-primary); color: var(--color-background); text-align: center; }
         .testimonial-content blockquote { font-family: var(--font-heading); font-size: 2rem; line-height: 1.5; max-width: 800px; margin: 0 auto 30px; font-style: italic; color: var(--color-background); }
         .testimonial-content cite { font-weight: 600; font-style: normal; color: var(--color-background); opacity: 0.9; }
@@ -167,11 +154,26 @@
 <body>
 
     <header class="header">
-        <div class="container"><nav class="navbar"><a href="#" class="logo">Aura</a><div class="nav-links"><a href="#services">Servicios</a><a href="#testimonial">Testimonios</a><a href="#contact">Contacto</a></div></nav></div>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">AlbaVita</a>
+                <div class="nav-links">
+                    <a href="#services">Servicios</a>
+                    <a href="#testimonial">Testimonios</a>
+                    <a href="#contact">Contacto</a>
+                </div>
+            </nav>
+        </div>
     </header>
 
     <section class="hero" id="home">
-        <div class="container"><div class="hero-content"><p class="subtitle" id="hero-subtitle">Bienestar & Belleza Consciente</p><h1 id="hero-title">El arte de cuidar tu piel, reflejado en tu alma.</h1><p id="hero-text">Descubre tratamientos personalizados que nutren tu piel y calman tu mente. Un espacio para reconectar contigo misma.</p><a href="#contact" class="btn" id="hero-btn">Reserva tu Cita</a></div></div>
+        <div class="container">
+            <div class="hero-content">
+                <p class="subtitle" id="hero-subtitle">Bienestar & Belleza Consciente</p>
+                <h1 id="hero-title">El arte de cuidar tu piel, reflejado en tu alma.</h1>
+                <p id="hero-text">Descubre tratamientos personalizados que nutren tu piel y calman tu mente. Un espacio para reconectar contigo misma.</p>
+            </div>
+        </div>
     </section>
 
     <section id="services">
@@ -189,11 +191,11 @@
     </section>
     
     <section class="testimonial" id="testimonial">
-        <div class="container"><div class="testimonial-content"><blockquote>"Desde que descubrí Aura, el cuidado de mi piel ha pasado de ser una rutina a ser mi ritual favorito. La profesionalidad y la calidez son inigualables."</blockquote><cite>- Sofía L.</cite></div></div>
+        <div class="container"><div class="testimonial-content"><blockquote>"Desde que descubrí AlbaVita, el cuidado de mi piel ha pasado de ser una rutina a ser mi ritual favorito. La profesionalidad y la calidez son inigualables."</blockquote><cite>- Sofía L.</cite></div></div>
     </section>
 
     <footer class="footer" id="contact">
-        <div class="container"><h2>¿Lista para empezar tu viaje de bienestar?</h2><p>Encuéntrame en C/ de la Serenidad, 123, Barcelona | Teléfono: 600 123 456</p><br><a href="mailto:hola@aurastudio.com" class="btn">Enviar un Email</a><br><br><br><p>&copy; 2025 Aura Beauty Studio. Diseñado con ♡.</p></div>
+        <div class="container"><h2>¿Lista para empezar tu viaje de bienestar?</h2><p>Encuéntrame en C/ de la Serenidad, 123, Barcelona | Teléfono: 600 123 456</p><br><a href="mailto:hola@albavita.com" class="btn">Enviar un Email</a><br><br><br><p>&copy; 2025 AlbaVita Beauty Studio. Diseñado con ♡.</p></div>
     </footer>
 
     <svg style="position:absolute; width:0; height:0;">
@@ -215,7 +217,7 @@
         gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, Flip);
 
         const tl = gsap.timeline({defaults: {ease: "power3.out"}});
-        tl.from('.logo', {opacity: 0, y: -20, duration: 0.8, delay: 0.3}).from('.nav-links a', {opacity: 0, y: -20, duration: 0.6, stagger: 0.2}, "-=0.6").from('#hero-subtitle', {opacity: 0, y: 20, duration: 0.8}, "-=0.6").from('#hero-title', {opacity: 0, y: 20, duration: 1}, "-=0.6").from('#hero-text', {opacity: 0, y: 20, duration: 1}, "-=0.8").from('#hero-btn', {opacity: 0, y: 20, duration: 1}, "-=0.8");
+        tl.from('.logo', {opacity: 0, y: -20, duration: 0.8, delay: 0.3}).from('.nav-links a', {opacity: 0, y: -20, duration: 0.6, stagger: 0.2}, "-=0.6").from('#hero-subtitle', {opacity: 0, y: 20, duration: 0.8}, "-=0.6").from('#hero-title', {opacity: 0, y: 20, duration: 1}, "-=0.6").from('#hero-text', {opacity: 0, y: 20, duration: 1}, "-=0.8");
         const header = document.querySelector('.header');
         window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 50); });
         let isAnimatingScroll = false;
@@ -236,56 +238,44 @@
             };
             let estadoActivo = 'predeterminado';
 
-            // MODIFICADO: Lógica de animación envuelta en GSAP MatchMedia
-            gsap.matchMedia().add("(min-width: 769px)", () => {
-                // --- SETUP PARA ESCRITORIO ---
+            function aplicarConfiguracion(configKey) {
+                const state = Flip.getState(tarjetas);
+                const config = configuraciones[configKey];
                 
-                // Aplicar configuración inicial del grid para desktop
-                aplicarConfiguracion('predeterminado', false); // false = sin animación al cargar
-
-                function aplicarConfiguracion(configKey, animate = true) {
-                    const state = Flip.getState(tarjetas);
-                    const config = configuraciones[configKey];
-                    
-                    tarjetas.forEach(tarjeta => {
-                        const id = tarjeta.dataset.id;
-                        tarjeta.style.gridArea = config[id];
-                        if (configKey === 'predeterminado') {
-                            tarjeta.classList.remove('activo', 'atenuado');
-                        } else {
-                            const idTarjetaActiva = configKey.replace('hover', '');
-                            tarjeta.classList.toggle('activo', id === idTarjetaActiva);
-                            tarjeta.classList.toggle('atenuado', id !== idTarjetaActiva);
-                        }
-                    });
-
-                    if (animate) {
-                        Flip.from(state, {
-                            duration: 0.7,
-                            ease: "power3.inOut",
-                            stagger: 0.05,
-                            absolute: true,
-                        });
-                    }
-                    estadoActivo = configKey;
-                }
-
                 tarjetas.forEach(tarjeta => {
-                    tarjeta.addEventListener('click', () => {
-                        const proximoEstado = `hover${tarjeta.dataset.id}`;
-                        aplicarConfiguracion(estadoActivo === proximoEstado ? 'predeterminado' : proximoEstado);
-                    });
+                    const id = tarjeta.dataset.id;
+                    tarjeta.style.gridArea = config[id];
+                    if (configKey === 'predeterminado') {
+                        tarjeta.classList.remove('activo', 'atenuado');
+                    } else {
+                        const idTarjetaActiva = configKey.replace('hover', '');
+                        tarjeta.classList.toggle('activo', id === idTarjetaActiva);
+                        tarjeta.classList.toggle('atenuado', id !== idTarjetaActiva);
+                    }
                 });
 
-                document.addEventListener('click', (e) => {
-                    if (estadoActivo === 'predeterminado' || e.target.closest('.services-grid')) return;
-                    aplicarConfiguracion('predeterminado');
+                Flip.from(state, {
+                    duration: 0.7,
+                    ease: "power3.inOut",
+                    stagger: 0.05,
+                    absolute: true,
                 });
-                
-                return () => {
-                    // Función de limpieza de GSAP: se ejecuta si la pantalla se hace pequeña
-                    // Aquí podríamos resetear los estilos si fuera necesario, pero el CSS ya lo hace.
-                }
+                estadoActivo = configKey;
+            }
+
+            aplicarConfiguracion('predeterminado');
+
+            tarjetas.forEach(tarjeta => {
+                tarjeta.addEventListener('click', () => {
+                    const proximoEstado = `hover${tarjeta.dataset.id}`;
+                    aplicarConfiguracion(estadoActivo === proximoEstado ? 'predeterminado' : proximoEstado);
+                });
+            });
+
+            document.addEventListener('click', (e) => {
+                if (estadoActivo === 'predeterminado') return;
+                if (e.target.closest('.services-grid')) return;
+                aplicarConfiguracion('predeterminado');
             });
         });
     </script>
