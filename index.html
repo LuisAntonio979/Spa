@@ -29,9 +29,6 @@
             overflow-x: hidden;
             background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjZjdmNGVkIj48L3JlY3Q+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9ImNzY2FjNCIgb3BhY2l0eT0iMC4xIj48L3JlY3Q+Cjwvc3ZnPg==');
         }
-        body.modal-open {
-            overflow: hidden;
-        }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
         section { padding: 120px 0; }
         h1, h2, h3 { font-family: var(--font-heading); font-weight: 500; line-height: 1.2; color: var(--color-text); }
@@ -54,64 +51,112 @@
         .btn { display: inline-block; padding: 12px 30px; background: var(--color-primary); color: white; text-decoration: none; border-radius: 50px; font-weight: 600; transition: all 0.3s ease; }
         .btn:hover { transform: translateY(-3px); box-shadow: 0 4px 20px rgba(62, 39, 35, 0.25); }
 
+        /* --- SECCIÓN DE SERVICIOS --- */
+
+        /* MODIFICADO: Estilos base para Móvil (Lineal y Tradicional) */
         .services-grid {
             width: 100%;
-            aspect-ratio: 1.6 / 1;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-template-rows: repeat(3, 1fr);
-            gap: 1%;
-            position: relative;
-            filter: url(#gooey);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
         .tarjeta {
-            border-radius: 0.8vw;
+            border-radius: 12px; /* Un poco más de radio para la vista lineal */
             position: relative;
             overflow: hidden;
             z-index: 1;
-            cursor: pointer;
+            color: white;
+            width: 100%;
+            aspect-ratio: 16 / 10;
+        }
+        .tarjeta-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+        }
+        .tarjeta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.1) 60%);
+        }
+        .tarjeta-contenido {
+            position: absolute;
+            inset: 0;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+        .tarjeta-contenido h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem; /* Tamaño fijo para móvil */
+            line-height: 1.2;
+            margin: 0;
             color: white;
         }
-        .tarjeta-bg { position: absolute; inset: 0; width: 100%; height: 100%; background-size: cover; background-position: center; z-index: -1; }
-        .tarjeta::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.1) 60%); }
-        .tarjeta-contenido { position: absolute; inset: 0; padding: 1.5vw; display: flex; flex-direction: column; justify-content: flex-end; }
-        .tarjeta-contenido h3 { font-family: var(--font-heading); font-size: clamp(1.2rem, 1.5vw, 1.8rem); line-height: 1.2; margin: 0; color: white; }
-        .tarjeta-contenido p { font-family: var(--font-body); font-size: clamp(0.8rem, 0.8vw, 0.9rem); line-height: 1.5; margin-top: 0.5vw; opacity: 0; max-height: 0; transform: translateY(10px); transition: opacity 0.3s ease-out, max-height 0.3s ease-out, transform 0.3s ease-out; }
-        
-        .tarjeta.atenuado {
-            opacity: 0.45; /* Atenuación ajustada */
-            filter: grayscale(50%);
-            z-index: 1;
+        .tarjeta-contenido p {
+            font-family: var(--font-body);
+            font-size: 0.9rem; /* Tamaño fijo para móvil */
+            line-height: 1.5;
+            margin-top: 10px;
+            /* En móvil la descripción SIEMPRE es visible */
+            opacity: 1;
+            max-height: 100px;
         }
-        .tarjeta.activo {
-            transform: scale(1.02);
-            box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.2);
-            z-index: 10;
-        }
-        .tarjeta.activo .tarjeta-contenido p { opacity: 1; max-height: 100px; transform: translateY(0); }
-
-        .modal-overlay { position: fixed; inset: 0; background-color: rgba(0,0,0,0.6); z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
-        .modal-overlay.is-active { opacity: 1; pointer-events: all; }
-        .tarjeta.modal-active { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 500px; height: 70%; max-height: 600px; z-index: 201; cursor: default; }
-        .tarjeta.modal-active .tarjeta-contenido p { opacity: 1; max-height: 200px; transform: translateY(0); }
-        .modal-close-btn { position: absolute; top: 15px; right: 15px; z-index: 3; background: rgba(255,255,255,0.8); color: #333; border: none; width: 30px; height: 30px; border-radius: 50%; font-size: 1.2rem; font-weight: bold; cursor: pointer; display: none; place-items: center; }
-        .tarjeta.modal-active .modal-close-btn { display: grid; }
         
-        @media (max-width: 1024px) {
+        /* MODIFICADO: Estilos para Desktop (Mosaico Interactivo) */
+        @media (min-width: 769px) {
             .services-grid {
-                grid-template-columns: 1fr 1fr;
-                grid-auto-rows: 250px;
-                aspect-ratio: auto;
-                filter: none;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-rows: repeat(3, 1fr);
+                gap: 1%;
+                aspect-ratio: 1.6 / 1;
+                filter: url(#gooey);
             }
-            .services-grid .tarjeta:nth-child(1) { grid-column: 1 / 2; grid-row: 1 / 2; }
-            .services-grid .tarjeta:nth-child(2) { grid-column: 2 / 3; grid-row: 1 / 2; }
-            .services-grid .tarjeta:nth-child(3) { grid-column: 1 / 2; grid-row: 2 / 3; }
-            .services-grid .tarjeta:nth-child(4) { grid-column: 2 / 3; grid-row: 2 / 3; }
-            .services-grid .tarjeta:nth-child(5) { grid-column: 1 / 2; grid-row: 3 / 4; }
-            .services-grid .tarjeta:nth-child(6) { grid-column: 2 / 3; grid-row: 3 / 4; }
+            .tarjeta {
+                aspect-ratio: auto; /* El grid controla el tamaño, no la tarjeta */
+                border-radius: 0.8vw;
+                cursor: pointer;
+            }
+            .tarjeta-contenido {
+                padding: 1.5vw;
+            }
+            .tarjeta-contenido h3 {
+                font-size: clamp(1rem, 1.5vw, 1.8rem);
+            }
+             .tarjeta-contenido p {
+                font-size: clamp(0.7rem, 0.8vw, 0.9rem);
+                margin-top: 0.5vw;
+                /* En desktop, la descripción vuelve a estar oculta */
+                opacity: 0;
+                max-height: 0;
+                transform: translateY(10px);
+                transition: opacity 0.3s ease-out, max-height 0.3s ease-out, transform 0.3s ease-out;
+            }
+            .tarjeta.atenuado {
+                opacity: 0.45;
+                filter: grayscale(50%);
+                z-index: 1;
+            }
+            .tarjeta.activo {
+                transform: scale(1.02);
+                box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.2);
+                z-index: 10;
+            }
+            .tarjeta.activo .tarjeta-contenido p {
+                opacity: 1;
+                max-height: 100px;
+                transform: translateY(0);
+            }
         }
 
+        /* --- Secciones Restantes --- */
         .testimonial { background-color: var(--color-primary); color: var(--color-background); text-align: center; }
         .testimonial-content blockquote { font-family: var(--font-heading); font-size: 2rem; line-height: 1.5; max-width: 800px; margin: 0 auto 30px; font-style: italic; color: var(--color-background); }
         .testimonial-content cite { font-weight: 600; font-style: normal; color: var(--color-background); opacity: 0.9; }
@@ -133,18 +178,16 @@
         <div class="container">
             <h2 class="section-title">Nuestros Rituales de Belleza</h2>
             <div class="services-grid">
-                <div class="tarjeta" data-id="1"><div class="tarjeta-bg" style="background-image: url('img/mascarilla-nutritiva.webp');"></div><div class="tarjeta-contenido"><button class="modal-close-btn">&times;</button><h3>Mascarilla Nutritiva</h3><p>Un velo de ingredientes activos que purifica, hidrata y devuelve la luminosidad perdida a tu rostro.</p></div></div>
-                <div class="tarjeta" data-id="2"><div class="tarjeta-bg" style="background-image: url('img/limpieza-facial.jpg');"></div><div class="tarjeta-contenido"><button class="modal-close-btn">&times;</button><h3>Limpieza Facial</h3><p>Renueva tu piel desde el interior. Extraemos impurezas y oxigenamos los poros para un acabado fresco y saludable.</p></div></div>
-                <div class="tarjeta" data-id="3"><div class="tarjeta-bg" style="background-image: url('img/manicura.jpg');"></div><div class="tarjeta-contenido"><button class="modal-close-btn">&times;</button><h3>Manicura Signature</h3><p>Un tratamiento completo que cuida tus manos, cutículas y uñas para un acabado impecable.</p></div></div>
-                <div class="tarjeta" data-id="4"><div class="tarjeta-bg" style="background-image: url('img/pedicura.jpg');"></div><div class="tarjeta-contenido"><button class="modal-close-btn">&times;</button><h3>Pedicura Spa</h3><p>Sumérgete en una experiencia de bienestar para tus pies. Incluye exfoliación, masaje y un esmaltado perfecto.</p></div></div>
-                <div class="tarjeta" data-id="5"><div class="tarjeta-bg" style="background-image: url('img/masaje-reductor.jpg');"></div><div class="tarjeta-contenido"><button class="modal-close-btn">&times;</button><h3>Masaje Reductor</h3><p>Técnicas manuales intensas que activan la circulación, drenan líquidos y ayudan a esculpir tu silueta.</p></div></div>
-                <div class="tarjeta" data-id="6"><div class="tarjeta-bg" style="background-image: url('img/tratamiento-corporal.jpg');"></div><div class="tarjeta-contenido"><button class="modal-close-btn">&times;</button><h3>Tratamientos Corporales</h3><p>Descubre nuestras envolturas y exfoliaciones corporales para nutrir y suavizar cada centímetro de tu piel.</p></div></div>
+                <div class="tarjeta" data-id="1"><div class="tarjeta-bg" style="background-image: url('img/mascarilla-nutritiva.webp');"></div><div class="tarjeta-contenido"><h3>Mascarilla Nutritiva</h3><p>Un velo de ingredientes activos que purifica, hidrata y devuelve la luminosidad perdida a tu rostro.</p></div></div>
+                <div class="tarjeta" data-id="2"><div class="tarjeta-bg" style="background-image: url('img/limpieza-facial.jpg');"></div><div class="tarjeta-contenido"><h3>Limpieza Facial</h3><p>Renueva tu piel desde el interior. Extraemos impurezas y oxigenamos los poros para un acabado fresco y saludable.</p></div></div>
+                <div class="tarjeta" data-id="3"><div class="tarjeta-bg" style="background-image: url('img/manicura.jpg');"></div><div class="tarjeta-contenido"><h3>Manicura Signature</h3><p>Un tratamiento completo que cuida tus manos, cutículas y uñas para un acabado impecable.</p></div></div>
+                <div class="tarjeta" data-id="4"><div class="tarjeta-bg" style="background-image: url('img/pedicura.jpg');"></div><div class="tarjeta-contenido"><h3>Pedicura Spa</h3><p>Sumérgete en una experiencia de bienestar para tus pies. Incluye exfoliación, masaje y un esmaltado perfecto.</p></div></div>
+                <div class="tarjeta" data-id="5"><div class="tarjeta-bg" style="background-image: url('img/masaje-reductor.jpg');"></div><div class="tarjeta-contenido"><h3>Masaje Reductor</h3><p>Técnicas manuales intensas que activan la circulación, drenan líquidos y ayudan a esculpir tu silueta.</p></div></div>
+                <div class="tarjeta" data-id="6"><div class="tarjeta-bg" style="background-image: url('img/tratamiento-corporal.jpg');"></div><div class="tarjeta-contenido"><h3>Tratamientos Corporales</h3><p>Descubre nuestras envolturas y exfoliaciones corporales para nutrir y suavizar cada centímetro de tu piel.</p></div></div>
             </div>
         </div>
     </section>
     
-    <div class="modal-overlay"></div>
-
     <section class="testimonial" id="testimonial">
         <div class="container"><div class="testimonial-content"><blockquote>"Desde que descubrí Aura, el cuidado de mi piel ha pasado de ser una rutina a ser mi ritual favorito. La profesionalidad y la calidez son inigualables."</blockquote><cite>- Sofía L.</cite></div></div>
     </section>
@@ -153,12 +196,11 @@
         <div class="container"><h2>¿Lista para empezar tu viaje de bienestar?</h2><p>Encuéntrame en C/ de la Serenidad, 123, Barcelona | Teléfono: 600 123 456</p><br><a href="mailto:hola@aurastudio.com" class="btn">Enviar un Email</a><br><br><br><p>&copy; 2025 Aura Beauty Studio. Diseñado con ♡.</p></div>
     </footer>
 
-    <!-- Filtro SVG con el valor correcto (18 -7) -->
     <svg style="position:absolute; width:0; height:0;">
       <defs>
         <filter id="gooey">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
-          <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+          <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+          <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 2 -10" result="goo" />
           <feBlend in="SourceGraphic" in2="goo" />
         </filter>
       </defs>
@@ -183,76 +225,68 @@
         document.addEventListener('DOMContentLoaded', () => {
             const grid = document.querySelector('.services-grid');
             const tarjetas = gsap.utils.toArray('.services-grid .tarjeta');
-            const overlay = document.querySelector('.modal-overlay');
+            const configuraciones = {
+                predeterminado: { 1: '1/1/3/2', 2: '1/2/3/4', 3: '1/4/2/5', 4: '2/4/3/5', 5: '3/1/4/2', 6: '3/2/4/5' },
+                hover1: { 1: '1/1/3/3', 2: '1/3/3/4', 3: '1/4/2/5', 4: '2/4/3/5', 5: '3/1/4/3', 6: '3/3/4/5' },
+                hover2: { 1: '1/1/3/2', 2: '1/2/3/4', 3: '1/4/2/5', 4: '2/4/3/5', 5: '3/1/4/2', 6: '3/2/4/5' },
+                hover3: { 1: '1/1/3/2', 2: '1/2/3/3', 3: '1/3/3/5', 4: '3/4/4/5', 5: '3/1/4/2', 6: '3/2/4/4' },
+                hover4: { 1: '1/1/3/2', 2: '1/2/2/4', 3: '1/4/2/5', 4: '2/3/4/5', 5: '3/1/4/2', 6: '2/2/4/3' },
+                hover5: { 1: '1/1/2/2', 2: '1/2/2/4', 3: '1/4/2/5', 4: '2/3/3/5', 5: '2/1/4/3', 6: '3/3/4/5' },
+                hover6: { 1: '1/1/3/2', 2: '1/2/2/4', 3: '1/4/2/5', 4: '2/4/4/5', 5: '3/1/4/2', 6: '2/2/4/4' }
+            };
+            let estadoActivo = 'predeterminado';
 
-            const isTouchDevice = 'ontouchstart' in window;
-            const isLargeScreen = window.innerWidth > 1024;
+            // MODIFICADO: Lógica de animación envuelta en GSAP MatchMedia
+            gsap.matchMedia().add("(min-width: 769px)", () => {
+                // --- SETUP PARA ESCRITORIO ---
+                
+                // Aplicar configuración inicial del grid para desktop
+                aplicarConfiguracion('predeterminado', false); // false = sin animación al cargar
 
-            if (!isTouchDevice || isLargeScreen) {
-                const configuraciones = {
-                    predeterminado: { 1: '1/1/3/2', 2: '1/2/3/4', 3: '1/4/2/5', 4: '2/4/3/5', 5: '3/1/4/2', 6: '3/2/4/5' },
-                    hover1: { 1: '1/1/3/3', 2: '1/3/3/4', 3: '1/4/2/5', 4: '2/4/3/5', 5: '3/1/4/3', 6: '3/3/4/5' },
-                    hover2: { 1: '1/1/3/2', 2: '1/2/3/4', 3: '1/4/2/5', 4: '2/4/3/5', 5: '3/1/4/2', 6: '3/2/4/5' },
-                    hover3: { 1: '1/1/3/2', 2: '1/2/3/3', 3: '1/3/3/5', 4: '3/4/4/5', 5: '3/1/4/2', 6: '3/2/4/4' },
-                    hover4: { 1: '1/1/3/2', 2: '1/2/2/4', 3: '1/4/2/5', 4: '2/3/4/5', 5: '3/1/4/2', 6: '2/2/4/3' },
-                    hover5: { 1: '1/1/2/2', 2: '1/2/2/4', 3: '1/4/2/5', 4: '2/3/3/5', 5: '2/1/4/3', 6: '3/3/4/5' },
-                    hover6: { 1: '1/1/3/2', 2: '1/2/2/4', 3: '1/4/2/5', 4: '2/4/4/5', 5: '3/1/4/2', 6: '2/2/4/4' }
-                };
-                let estadoActivo = 'predeterminado';
-
-                function aplicarConfiguracion(configKey) {
+                function aplicarConfiguracion(configKey, animate = true) {
                     const state = Flip.getState(tarjetas);
                     const config = configuraciones[configKey];
-                    tarjetas.forEach(t => {
-                        t.style.gridArea = config[t.dataset.id];
-                        t.classList.toggle('activo', configKey !== 'predeterminado' && t.dataset.id === configKey.replace('hover', ''));
-                        t.classList.toggle('atenuado', configKey !== 'predeterminado' && t.dataset.id !== configKey.replace('hover', ''));
+                    
+                    tarjetas.forEach(tarjeta => {
+                        const id = tarjeta.dataset.id;
+                        tarjeta.style.gridArea = config[id];
+                        if (configKey === 'predeterminado') {
+                            tarjeta.classList.remove('activo', 'atenuado');
+                        } else {
+                            const idTarjetaActiva = configKey.replace('hover', '');
+                            tarjeta.classList.toggle('activo', id === idTarjetaActiva);
+                            tarjeta.classList.toggle('atenuado', id !== idTarjetaActiva);
+                        }
                     });
-                    Flip.from(state, { duration: 0.7, ease: "power3.inOut", stagger: 0.05, absolute: true });
+
+                    if (animate) {
+                        Flip.from(state, {
+                            duration: 0.7,
+                            ease: "power3.inOut",
+                            stagger: 0.05,
+                            absolute: true,
+                        });
+                    }
                     estadoActivo = configKey;
                 }
-                
-                aplicarConfiguracion('predeterminado');
-                
-                tarjetas.forEach(t => t.addEventListener('click', () => {
-                    const proximo = `hover${t.dataset.id}`;
-                    aplicarConfiguracion(estadoActivo === proximo ? 'predeterminado' : proximo);
-                }));
 
-                document.addEventListener('click', e => {
-                    if (estadoActivo !== 'predeterminado' && !e.target.closest('.services-grid')) {
-                        aplicarConfiguracion('predeterminado');
-                    }
-                });
-
-            } else {
-                tarjetas.forEach(card => {
-                    const closeBtn = card.querySelector('.modal-close-btn');
-
-                    card.addEventListener('click', () => {
-                        if (document.body.classList.contains('modal-open')) return;
-                        document.body.classList.add('modal-open');
-                        overlay.classList.add('is-active');
-                        card.classList.add('modal-active');
-                        gsap.fromTo(card, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'power3.out' });
+                tarjetas.forEach(tarjeta => {
+                    tarjeta.addEventListener('click', () => {
+                        const proximoEstado = `hover${tarjeta.dataset.id}`;
+                        aplicarConfiguracion(estadoActivo === proximoEstado ? 'predeterminado' : proximoEstado);
                     });
-                    
-                    const closeModal = () => {
-                        document.body.classList.remove('modal-open');
-                        overlay.classList.remove('is-active');
-                        gsap.to(card, {
-                            opacity: 0, scale: 0.8, duration: 0.4, ease: 'power3.in',
-                            onComplete: () => {
-                                card.classList.remove('modal-active');
-                                gsap.set(card, { clearProps: "all" });
-                            }
-                        });
-                    };
-                    
-                    closeBtn.addEventListener('click', e => { e.stopPropagation(); closeModal(); });
-                    overlay.addEventListener('click', () => { if (card.classList.contains('modal-active')) closeModal(); });
                 });
-            }
+
+                document.addEventListener('click', (e) => {
+                    if (estadoActivo === 'predeterminado' || e.target.closest('.services-grid')) return;
+                    aplicarConfiguracion('predeterminado');
+                });
+                
+                return () => {
+                    // Función de limpieza de GSAP: se ejecuta si la pantalla se hace pequeña
+                    // Aquí podríamos resetear los estilos si fuera necesario, pero el CSS ya lo hace.
+                }
+            });
         });
     </script>
 </body>
