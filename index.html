@@ -30,7 +30,7 @@
             background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjZjdmNGVkIj48L3JlY3Q+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9ImNzY2FjNCIgb3BhY2l0eT0iMC4xIj48L3JlY3Q+Cjwvc3ZnPg==');
         }
         body.modal-open {
-            overflow: hidden; /* Evita el scroll del fondo cuando el modal está abierto */
+            overflow: hidden;
         }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
         section { padding: 120px 0; }
@@ -54,7 +54,6 @@
         .btn { display: inline-block; padding: 12px 30px; background: var(--color-primary); color: white; text-decoration: none; border-radius: 50px; font-weight: 600; transition: all 0.3s ease; }
         .btn:hover { transform: translateY(-3px); box-shadow: 0 4px 20px rgba(62, 39, 35, 0.25); }
 
-        /* --- SECCIÓN DE SERVICIOS: LÓGICA HÍBRIDA --- */
         .services-grid {
             width: 100%;
             aspect-ratio: 1.6 / 1;
@@ -79,12 +78,18 @@
         .tarjeta-contenido h3 { font-family: var(--font-heading); font-size: clamp(1.2rem, 1.5vw, 1.8rem); line-height: 1.2; margin: 0; color: white; }
         .tarjeta-contenido p { font-family: var(--font-body); font-size: clamp(0.8rem, 0.8vw, 0.9rem); line-height: 1.5; margin-top: 0.5vw; opacity: 0; max-height: 0; transform: translateY(10px); transition: opacity 0.3s ease-out, max-height 0.3s ease-out, transform 0.3s ease-out; }
         
-        /* Lógica para Escritorio y Tablets Grandes */
-        .tarjeta.atenuado { opacity: 0.45; filter: grayscale(50%); z-index: 1; }
-        .tarjeta.activo { transform: scale(1.02); box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.2); z-index: 10; }
+        .tarjeta.atenuado {
+            opacity: 0.45; /* Atenuación ajustada */
+            filter: grayscale(50%);
+            z-index: 1;
+        }
+        .tarjeta.activo {
+            transform: scale(1.02);
+            box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.2);
+            z-index: 10;
+        }
         .tarjeta.activo .tarjeta-contenido p { opacity: 1; max-height: 100px; transform: translateY(0); }
 
-        /* Lógica para Móviles y Tablets Pequeñas */
         .modal-overlay { position: fixed; inset: 0; background-color: rgba(0,0,0,0.6); z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
         .modal-overlay.is-active { opacity: 1; pointer-events: all; }
         .tarjeta.modal-active { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 500px; height: 70%; max-height: 600px; z-index: 201; cursor: default; }
@@ -97,7 +102,7 @@
                 grid-template-columns: 1fr 1fr;
                 grid-auto-rows: 250px;
                 aspect-ratio: auto;
-                filter: none; /* Desactivar efecto gooey en pantallas pequeñas */
+                filter: none;
             }
             .services-grid .tarjeta:nth-child(1) { grid-column: 1 / 2; grid-row: 1 / 2; }
             .services-grid .tarjeta:nth-child(2) { grid-column: 2 / 3; grid-row: 1 / 2; }
@@ -107,7 +112,6 @@
             .services-grid .tarjeta:nth-child(6) { grid-column: 2 / 3; grid-row: 3 / 4; }
         }
 
-        /* --- Secciones Restantes --- */
         .testimonial { background-color: var(--color-primary); color: var(--color-background); text-align: center; }
         .testimonial-content blockquote { font-family: var(--font-heading); font-size: 2rem; line-height: 1.5; max-width: 800px; margin: 0 auto 30px; font-style: italic; color: var(--color-background); }
         .testimonial-content cite { font-weight: 600; font-style: normal; color: var(--color-background); opacity: 0.9; }
@@ -149,6 +153,7 @@
         <div class="container"><h2>¿Lista para empezar tu viaje de bienestar?</h2><p>Encuéntrame en C/ de la Serenidad, 123, Barcelona | Teléfono: 600 123 456</p><br><a href="mailto:hola@aurastudio.com" class="btn">Enviar un Email</a><br><br><br><p>&copy; 2025 Aura Beauty Studio. Diseñado con ♡.</p></div>
     </footer>
 
+    <!-- Filtro SVG con el valor correcto (18 -7) -->
     <svg style="position:absolute; width:0; height:0;">
       <defs>
         <filter id="gooey">
@@ -166,6 +171,7 @@
     
     <script>
         gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, Flip);
+
         const tl = gsap.timeline({defaults: {ease: "power3.out"}});
         tl.from('.logo', {opacity: 0, y: -20, duration: 0.8, delay: 0.3}).from('.nav-links a', {opacity: 0, y: -20, duration: 0.6, stagger: 0.2}, "-=0.6").from('#hero-subtitle', {opacity: 0, y: 20, duration: 0.8}, "-=0.6").from('#hero-title', {opacity: 0, y: 20, duration: 1}, "-=0.6").from('#hero-text', {opacity: 0, y: 20, duration: 1}, "-=0.8").from('#hero-btn', {opacity: 0, y: 20, duration: 1}, "-=0.8");
         const header = document.querySelector('.header');
@@ -183,7 +189,6 @@
             const isLargeScreen = window.innerWidth > 1024;
 
             if (!isTouchDevice || isLargeScreen) {
-                // --- LÓGICA PARA ESCRITORIO Y TABLETS GRANDES (Efecto Líquido) ---
                 const configuraciones = {
                     predeterminado: { 1: '1/1/3/2', 2: '1/2/3/4', 3: '1/4/2/5', 4: '2/4/3/5', 5: '3/1/4/2', 6: '3/2/4/5' },
                     hover1: { 1: '1/1/3/3', 2: '1/3/3/4', 3: '1/4/2/5', 4: '2/4/3/5', 5: '3/1/4/3', 6: '3/3/4/5' },
@@ -221,13 +226,11 @@
                 });
 
             } else {
-                // --- LÓGICA PARA MÓVILES Y TABLETS PEQUEÑAS (Modal) ---
                 tarjetas.forEach(card => {
                     const closeBtn = card.querySelector('.modal-close-btn');
 
                     card.addEventListener('click', () => {
                         if (document.body.classList.contains('modal-open')) return;
-
                         document.body.classList.add('modal-open');
                         overlay.classList.add('is-active');
                         card.classList.add('modal-active');
