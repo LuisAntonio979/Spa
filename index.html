@@ -178,7 +178,6 @@
                     <a href="#ritual-steps">El Ritual</a>
                     <a href="#services">Servicios</a>
                     <a href="#testimonial">Testimonios</a>
-                    <!-- AÑADIDO: Enlace a Contacto -->
                     <a href="#contact">Contacto</a>
                 </div>
                 <button class="menu-toggle" aria-label="Abrir menú">
@@ -249,10 +248,10 @@
     
     <script>
         gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, Flip);
-
         const tl = gsap.timeline({defaults: {ease: "power3.out"}});
+        // Ajuste para evitar animar los enlaces de navegación en la carga inicial si el menú móvil está activo
         if (window.innerWidth > 768) {
-            tl.from('.nav-links a', {opacity: 0, y: -20, duration: 0.6, stagger: 0.2}, "-=0.6");
+            tl.from('.nav-links a', {opacity: 0, y: -20, duration: 0.6, stagger: 0.2});
         }
         tl.from('.logo', {opacity: 0, y: -20, duration: 0.8, delay: 0.3})
           .from('#hero-subtitle', {opacity: 0, y: 20, duration: 0.8}, "-=0.6")
@@ -275,7 +274,6 @@
                 navLinks.classList.toggle('active');
             });
             
-            // AÑADIDO: Lógica para cerrar el menú al hacer clic en un enlace
             navLinks.addEventListener('click', () => {
                 if (navLinks.classList.contains('active')) {
                     menuToggle.classList.remove('active');
