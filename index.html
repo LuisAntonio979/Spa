@@ -64,7 +64,8 @@
         .nav-toggle.is-active .hamburger::after { top: 0; transform: rotate(-45deg); transition: top 0.3s ease-in-out, transform 0.3s ease-in-out 0.3s; }
         
         .hero { height: 100vh; display: flex; align-items: center; background-image: linear-gradient(to right, rgba(247, 244, 237, 1) 30%, rgba(247, 244, 237, 0.2)), url('img/masaje-hero.webp'); background-size: cover; background-position: 0 0, calc(50% + 10px) 40%; }
-        .hero-content { max-width: 50%; margin: 0; text-align: left; }
+        .hero-content { max-width: 90%; margin: 0; text-align: left; }
+        #hero-text {max-width: 55%; /* El párrafo ahora solo ocupa el 60% de su contenedor */}
         .hero-content .subtitle { font-weight: 600; font-size: 1rem; color: var(--color-accent); letter-spacing: 1px; text-transform: uppercase; margin-top: 0; margin-bottom: 10px; }
         .hero-content p { margin: 20px 0 30px; }
         .btn { display: inline-block; padding: 12px 30px; background: var(--color-primary); color: white; text-decoration: none; border-radius: 50px; font-weight: 600; transition: all 0.3s ease; }
