@@ -11,13 +11,11 @@
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@500;700&display=swap');
-        
-        /* --- NUEVA PALETA DE COLOR: Clarity Ritual --- */
         :root {
-            --color-background: #F8F8F8; /* Alabastro */
-            --color-text: #4A4A4A;      /* Gris Oscuro */
-            --color-primary: #6B7A8F;    /* Azul Piedra */
-            --color-accent: #C0A172;     /* Dorado Suave */
+            --color-background: #F7F4ED;
+            --color-text: #3E2723;
+            --color-primary: #E07A5F;
+            --color-accent: #CD7F32;
             --font-heading: 'Playfair Display', serif;
             --font-body: 'Montserrat', sans-serif;
         }
@@ -31,7 +29,7 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
-            /* Se elimina la textura de fondo para un look más limpio */
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjZjdmNGVkIj48L3JlY3Q+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9ImNzY2FjNCIgb3BhY2l0eT0iMC4xIj48L3JlY3Q+Cjwvc3ZnPg==');
         }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         section { padding: 100px 0; }
@@ -43,7 +41,7 @@
         p { margin-bottom: 20px; max-width: 650px; }
         
         .header { position: fixed; width: 100%; padding: 15px 0; z-index: 1000; transition: background-color 0.3s ease, padding 0.3s ease; }
-        .header.scrolled { background-color: rgba(248, 248, 248, 0.85); backdrop-filter: blur(10px); }
+        .header.scrolled { background-color: rgba(247, 244, 237, 0.85); backdrop-filter: blur(10px); }
         .navbar { display: flex; justify-content: space-between; align-items: center; }
         .logo { font-family: var(--font-heading); font-weight: 700; font-size: 1.5rem; text-decoration: none; color: var(--color-text); z-index: 1001; }
         
@@ -65,19 +63,20 @@
         .nav-toggle.is-active .hamburger::before { top: 0; transform: rotate(45deg); transition: top 0.3s ease-in-out, transform 0.3s ease-in-out 0.3s; }
         .nav-toggle.is-active .hamburger::after { top: 0; transform: rotate(-45deg); transition: top 0.3s ease-in-out, transform 0.3s ease-in-out 0.3s; }
         
-        .hero { height: 100vh; display: flex; align-items: center; background-image: linear-gradient(to right, rgba(248, 248, 248, 1) 20%, rgba(248, 248, 248, 0.2)), url('img/masaje-movil-reflejo.webp'); background-size: cover; background-position: 0 0, center; }
+        .hero { height: 100vh; display: flex; align-items: center; background-image: linear-gradient(to right, rgba(247, 244, 237, 1) 25%, rgba(247, 244, 237, 0.2)), url('img/masaje-movil-reflejo.webp'); background-size: cover; background-position: 0 0, center; }
         .hero-content { max-width: 90%; margin: 0 auto; text-align: left; }
         .hero-content .subtitle { font-weight: 600; font-size: 1rem; color: var(--color-accent); letter-spacing: 1px; text-transform: uppercase; margin-top: 0; margin-bottom: 10px; }
         .hero-content p { margin: 20px 0 30px; }
         .btn { display: inline-block; padding: 12px 30px; background: var(--color-primary); color: white; text-decoration: none; border-radius: 50px; font-weight: 600; transition: all 0.3s ease; }
-        .btn:hover { transform: translateY(-3px); box-shadow: 0 4px 20px rgba(107, 122, 143, 0.4); }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 4px 20px rgba(62, 39, 35, 0.25); }
 
+        /* NUEVO: Prepara los elementos del Hero para la animación de entrada */
         .logo, .nav-links a, #hero-subtitle, #hero-title, #hero-text, #hero-btn {
             opacity: 0;
             transform: translateY(20px);
         }
 
-        #ritual-steps { background-color: #ECECEC; } /* Fondo más limpio */
+        #ritual-steps { background-color: #EAE6DA; }
         .steps-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; text-align: center; }
         .step .icon { font-family: 'Material Symbols Outlined'; font-size: 2.5rem; color: var(--color-primary); margin-bottom: 15px; font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 48; vertical-align: middle; }
         .step h3 { font-size: 1.5rem; margin-bottom: 10px; color: var(--color-text); }
@@ -102,7 +101,7 @@
             .nav-links { position: static; height: auto; width: auto; background-color: transparent; padding-top: 0; flex-direction: row; transform: translateX(0); transition: none; }
             .nav-links a { font-size: 1rem; }
             .header { padding: 18px 0; }
-            .hero { background-image: linear-gradient(to right, rgba(248, 248, 248, 1) 30%, rgba(248, 248, 248, 0.2)), url('img/masaje-hero.webp'); background-position: 0 0, calc(50% + 200px) 20%; }
+            .hero { background-image: linear-gradient(to right, rgba(247, 244, 237, 1) 30%, rgba(247, 244, 237, 0.2)), url('img/masaje-hero.webp'); background-position: 0 0, calc(50% + 200px) 20%; }
             .hero-content { max-width: 50%; margin: 0; text-align: left; }
             .hero-content .subtitle { margin-top: 70px; margin-bottom: 5px; }
             .hero-content p { margin: 30px 0; }
@@ -119,7 +118,9 @@
         }
 
         .testimonial { background-color: var(--color-primary); color: var(--color-background); text-align: center; }
-        .footer { background-color: #ECECEC; text-align: center; padding: 50px 0; }
+        .testimonial-content blockquote { font-family: var(--font-heading); font-size: 1.8rem; line-height: 1.5; max-width: 800px; margin: 0 auto 30px; font-style: italic; color: var(--color-background); }
+        .testimonial-content cite { font-weight: 600; font-style: normal; color: var(--color-background); opacity: 0.9; }
+        .footer { background: #EAE6DA; text-align: center; padding: 50px 0; }
         .footer p { max-width: none; margin: 0; }
     </style>
 </head>
@@ -189,8 +190,8 @@
     <svg style="position:absolute; width:0; height:0;">
       <defs>
         <filter id="gooey">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
-          <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 2 -7" result="goo" />
+          <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+          <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 2 -10" result="goo" />
           <feBlend in="SourceGraphic" in2="goo" />
         </filter>
       </defs>
@@ -205,6 +206,7 @@
         gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, Flip);
 
         const tl = gsap.timeline({defaults: {ease: "power3.out"}});
+        // MODIFICADO: Animaciones cambiadas a .to()
         tl.to('.logo', {opacity: 1, y: 0, duration: 0.8, delay: 0.3})
           .to('.nav-links a', {opacity: 1, y: 0, duration: 0.6, stagger: 0.05}, "-=0.6")
           .to('#hero-subtitle', {opacity: 1, y: 0, duration: 0.8}, "-=0.6")
