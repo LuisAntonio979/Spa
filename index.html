@@ -84,12 +84,19 @@
             font-weight: 600; 
             font-size: 1rem; 
             color: var(--color-accent); 
-            letter-spacing: 2px; 
+            letter-spacing: 1px; 
             text-transform: uppercase; 
             margin-top: 0;
-            margin-bottom: 10px; 
+            margin-bottom: 15px; 
         }
-        .hero-content p { margin: 20px 0 30px; }
+
+        .hero-content p { margin: 20px auto 30px; /* 0 antes - 'auto' en los márgenes laterales lo centrará */}
+
+        /* NUEVA REGLA ESPECÍFICA */
+        #hero-text {max-width: 60%; /* El párrafo ahora solo ocupa el 60% de su contenedor */}
+        
+        
+        
         .btn { display: inline-block; padding: 12px 30px; background: var(--color-primary); color: white; text-decoration: none; border-radius: 50px; font-weight: 600; transition: all 0.3s ease; }
         .btn:hover { transform: translateY(-3px); box-shadow: 0 4px 20px rgba(62, 39, 35, 0.25); }
 
